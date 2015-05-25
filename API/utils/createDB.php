@@ -1,5 +1,5 @@
 <?php 
-    include "../connection.php";
+    include_once "../connection.php";
     $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     $drop = $db->prepare("DROP TABLE IF EXISTS Events");
     $drop->execute();

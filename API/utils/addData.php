@@ -1,5 +1,5 @@
 <?php 
-    include "../connection.php";
+    include_once "../connection.php";
     $json = file_get_contents("../events.json");
     $data = json_decode($json)->events;
     foreach($data as $event){

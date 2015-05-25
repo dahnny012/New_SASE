@@ -11,7 +11,7 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
         }
         
         public function log(){
-            return $this->data;
+            return json_decode($this->data,true);
         }
     }
     
@@ -30,34 +30,35 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
             return json_encode($rows);
         }
         
-        public function insert($data){
+        public function insert($event){
             $insert = $this->db->prepare("Insert into Events (Name,Date,Time,Location,Description,FB) VALUES (?,?,?,?,?,?)");
-            $insert->bindParam(1,$event->name);
-            $insert->bindParam(2,$event->date);
-            $insert->bindParam(3,$event->time);
-            $insert->bindParam(4,$event->location);
-            $insert->bindParam(5,$event->description);
-            $insert->bindParam(6,$event->fb);
+            $insert->bindParam(1,$event["name"]);
+            $insert->bindParam(2,$event["date"]);
+            $insert->bindParam(3,$event["time"]);
+            $insert->bindParam(4,$event["location"]);
+            $insert->bindParam(5,$event["description"]);
+            $insert->bindParam(6,$event["fb"]);
             $insert->execute();
             return status($insert);
         }
         
-        public function edit($data){
+        public function edit($event){
             $edit = $this->db->prepare("Update Events Set Name = ?, Date = ?, Time = ? ,Location = ?, Description = ?,FB = ? WHERE EID = ?");
-            $edit->bindParam(1,$event->name);
-            $edit->bindParam(2,$event->date);
-            $edit->bindParam(3,$event->time);
-            $edit->bindParam(4,$event->location);
-            $edit->bindParam(5,$event->description);
-            $edit->bindParam(6,$event->fb);
-            $edit->bindParam(7,$event->id);
-            $this->status($insert);
+            $edit->bindParam(1,$event["name"]);
+            $edit->bindParam(2,$event["date"]);
+            $edit->bindParam(3,$event["time"]);
+            $edit->bindParam(4,$event["location"]);
+            $edit->bindParam(5,$event["description"]);
+            $edit->bindParam(6,$event["fb"]);
+            $edit->bindParam(7,$event["id"]);
+            $edit->execute();
             return status($edit);
         }
         
-        public function delete($data){
+        public function delete($event){
             $delete = $this->db->prepare("Delete from Events Where EID = ?");
-            $delete->bindParam(1,$data["eid"]);
+            $delete->bindParam(1,$event["eid"]);
+            $delete->execute();
             return status($delete);
         }
     }
@@ -68,31 +69,26 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
         public function __construct(){
             $this->model = new Event_Model();
         }
-        public function fetch(){
-            if(!empty($_GET)){
-                switch($_GET["msg"]){
-                    case "query":
-                        return $this->model->get();
-                    default:
-                        return $this->model->get();
-                }
-            }else if(!empty($data)){
-                if(!$this->authenticate($data))
-                    return message("error");
+        public function fetch($data=["msg"=>""]){
+            if(empty($data["msg"])){
+                return message("error");
+            }
+            if($data["msg"] == "query"){
+                return $this->model->get();   
+            }
+            if(!$this->authenticate($data)){
+                return message("error");
+            }
+            switch($data["msg"]){
+                case "edit":
+                    return $this->model->edit($data);
+                case "delete":
+                    return $this->model->delete($data);
+                case "insert":
+                    return $this->model->insert($data);
                     
-                switch($data["msg"]){
-                    case "edit":
-                        return $this->model->edit($data);
-                        break;
-                    case "delete":
-                        return $this->model->delete($data);
-                        break;
-                    case "insert":
-                        return $this->model->insert($data);
-                        break;
-                }
-            }else{
-                return message("success");
+                default:
+                    return message("error");
             }
         }
         public function authenticate($data){
@@ -104,7 +100,7 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
     // Psuedo-Class i dont want to deal with serialization
     function status($query,$data=null){
         $status;
-        if(!$insert->rowCount()){
+        if(!$query->rowCount()){
             $status = message("error");
         }else{
             $status = message("success");
