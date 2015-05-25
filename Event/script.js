@@ -1,57 +1,47 @@
 moment().format();
-Event = React.createClass({
+var EventList = React.createClass({
     getInitialState: function() {
         return {
-            name: "",
-            date: "",
-            location: "",
-            time: "",
-            description: "",
-            fb: "",
+            events:[""]
         };
     },
 
     componentDidMount: function() {
-        $.get(this.props.source, function(result) {
-            var result = JSON.parse(result).events[0];
-            if (this.isMounted()) {
-                this.setState({
-                    name: result.name,
-                    date: result.data,
-                    location: result.location,
-                    time: result.time,
-                    description: result.description,
-                    fb: result.fb
-                });
-            }
+        $.get(this.props.source,{msg:"query"},function(data){
+            data = JSON.parse(data);
+            this.setState({
+                events:data
+            });
         }.bind(this));
     },
 
     render: function() {
-        return (<div className="events">
-         <div className="event card blue darken-4">
-            <div className="card-content white-text">
-               <span className="card-title">Event name</span>
-               <p>
-                  <span className="eventLogistics">Time - Date - Location</span>
-                  <br>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                  Pellentesque quis justo vel arcu fermentum sollicitudin. 
-                  Nulla vitae nunc sollicitudin, efficitur justo vel, bibendum odio. 
-                  Sed venenatis sapien vitae finibus congue. Morbi lacinia sapien massa, 
-                  eu ornare nisl congue ac. Nam nec malesuada ipsum, sed accumsan justo. 
-                  Aliquam at aliquam diam.
-                  <br/>
-                  <button className="btn-floating">FB</button>
-                  </br>
-               </p>
-            </div>
-            <div className="card-action">
-               <a href="">Edit</a>
-               <a href="">Delete</a>
-            </div>
-         </div>
-         </div>);
+        var nodes =  this.state.events.map(function(e){
+            console.log(e.Description);
+            return (<div className="events" key={e.EID}>
+             <div className="event card blue darken-4">
+                <div className="card-content white-text">
+                   <span className="card-title">{e.Name}</span>
+                   <p>
+                      <span className="eventLogistics">{e.Date} {e.Time} {e.Location}</span>
+                      <br>
+                      {e.Description}
+                      <br/>
+                      <a className="btn-floating" href={e.FB}>FB</a>
+                      </br>
+                   </p>
+                </div>
+                <div className="card-action">
+                   <a href="">Edit</a>
+                   <a href="">Delete</a>
+                </div>
+             </div>
+             </div>);
+        });
+        return (<div>
+        {nodes}
+        </div>)
+        
     }
 });
 
@@ -74,7 +64,7 @@ var Modal = React.createClass({
         },
     render:function(){
         return (  <div id="eventForm" className="">
-    <button onClick={this.onClick} className="btn">Add a Event</button>
+    <button onClick={this.onClick} className="btn"> {this.state.show ? "Cancel" : "Add a Event"} </button>
     {this.state.show ? <EventForm/> : null}
     </div>)
     }
@@ -123,7 +113,6 @@ var EventForm = React.createClass({
     </div>
         <div className="row">
         <div className="col s4 offset-s2">
-      <button className="btn modal-close">Cancel</button>
       <button className="btn">Submit</button>
       </div>
     </div>
@@ -132,7 +121,7 @@ var EventForm = React.createClass({
 }); 
 
 
-React.render( <Event source = "https://new-sase-dahnny012.c9.io/API/event.php"/> 
+React.render( <EventList source = "https://new-sase-dahnny012.c9.io/API/event.php?msg=query"/> 
 , document.getElementById("events"));
 
 

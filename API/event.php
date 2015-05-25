@@ -18,7 +18,7 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
     class Event_Model{
         public $db;
         public function __construct(){
-            include "../connection.php";
+            include "connection.php";
             $this->db = $db;
         }
         
@@ -113,6 +113,20 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
         $msg["data"] = $data;
         return json_encode($msg);
     }
+    
+$controller = new Event_Controller();
+if(!empty($_GET)){
+    $data = $controller->fetch($_GET);
+    $view = new Event_View($data);
+    $view->render();
+}else if(!empty($_POST)){
+    $data = $controller->fetch($_POST);
+    $view = new Event_View($data);
+    $view->render();
+}else{
+    echo message("error");
+}
+
     
     
         
