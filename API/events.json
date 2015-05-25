@@ -3,21 +3,21 @@
       "name": "Event",
       "date": "2015-09-10",
       "location": "Mech E 1130",
-      "time": "18-12-00",
+      "time": "18:12:00",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
       "fb": "https://www.facebook.com/events/698543220251890/"
     }, {
       "name": "Event",
       "date": "2015-11-10",
       "location": "Keller 2-231",
-      "time": "12-12-00",
+      "time": "12:12:00",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
       "fb": "https://www.facebook.com/events/698543220251890/"
     }, {
       "name": "Event",
       "date": "2015-09-19",
       "location": "Behind Coffman",
-      "time": "14-30-00",
+      "time": "14:30:00",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
       "fb": "https://www.facebook.com/events/698543220251890/"
     }]

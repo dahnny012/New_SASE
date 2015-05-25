@@ -1,4 +1,84 @@
 moment().format();
+var query = "https://new-sase-dahnny012.c9.io/API/event.php?msg=query";
+
+
+
+var Event = React.createClass({
+    getInitialState: function() {
+        return {
+            event:"",
+            editMode:false,
+            delete:false
+        };
+    },
+    componentDidMount:function(){
+        this.setState({
+            event:this.props.event
+        })
+    },
+    render:function(){
+        var re = this;
+        if(this.state.delete)
+            return null;
+        if(this.state.editMode){
+            return (<div className="event card blue darken-4">
+            <div className="card-content white-text">
+               <input type="text" className="card-title" value={this.state.event.Name}/>
+               <p>
+                  <input type="text" className="card-title" value={this.state.event.Date}/>
+                  <input type="text" className="card-title" value={this.state.event.Time}/>
+                  <input type="text" className="card-title" value={this.state.event.Location}/>
+                  <p>
+                  <textarea name="" className="materialize-textarea" value={this.state.event.Description}></textarea>
+                  </p>
+                  <input type="text" className="card-title" value={this.state.event.FB}/>
+               </p>
+            </div>
+            <div className="card-action">
+               <button onClick={function(){
+                   
+               }}>Add</button>
+               <button onClick={function(){
+                   re.setState({
+                       editMode:false
+                   });
+               }}>Cancel</button>
+            </div>
+         </div>)
+        }
+        return (<div className="events" key={this.state.event.EID}>
+             <div className="event card blue darken-4">
+                <div className="card-content white-text">
+                   <span className="card-title">{this.state.event.Name}</span>
+                   <p>
+                      <span className="eventLogistics">{this.state.event.Date} {this.state.event.Time} {this.state.event.Location}</span>
+                      <br>
+                      {this.state.event.Description}
+                      <br/>
+                      <a className="btn-floating" href={this.state.event.FB}>FB</a>
+                      </br>
+                   </p>
+                </div>
+                <div className="card-action">
+                   <button onClick={function(){
+                       re.setState({
+                           editMode:true
+                       });
+                   }}>Edit</button>
+                   <button onClick={function(){
+                       $.get(query,{msg:"query",eid:re.state.event.EID},function(data){
+                           console.log(re.state.event.EID);
+                            re.setState({
+                                delete:true
+                            });
+                        }.bind(re));
+                   }}>Delete</button>
+                </div>
+             </div>
+             </div>);
+    }
+})
+
 var EventList = React.createClass({
     getInitialState: function() {
         return {
@@ -9,6 +89,14 @@ var EventList = React.createClass({
     componentDidMount: function() {
         $.get(this.props.source,{msg:"query"},function(data){
             data = JSON.parse(data);
+            /*
+            for(var i=3; i<100; i++){
+                var gg = $.extend(true, {}, data[0]);
+                gg.EID = i;
+                gg.Name = i;
+                data.push(gg);
+            }
+            */
             this.setState({
                 events:data
             });
@@ -16,27 +104,12 @@ var EventList = React.createClass({
     },
 
     render: function() {
+        var re = this;
         var nodes =  this.state.events.map(function(e){
-            console.log(e.Description);
-            return (<div className="events" key={e.EID}>
-             <div className="event card blue darken-4">
-                <div className="card-content white-text">
-                   <span className="card-title">{e.Name}</span>
-                   <p>
-                      <span className="eventLogistics">{e.Date} {e.Time} {e.Location}</span>
-                      <br>
-                      {e.Description}
-                      <br/>
-                      <a className="btn-floating" href={e.FB}>FB</a>
-                      </br>
-                   </p>
-                </div>
-                <div className="card-action">
-                   <a href="">Edit</a>
-                   <a href="">Delete</a>
-                </div>
-             </div>
-             </div>);
+            return (<Event
+            event = {e}
+            key={e.EID}
+            />)
         });
         return (<div>
         {nodes}
