@@ -1,6 +1,6 @@
 moment().format();
 var query = "https://new-sase-dahnny012.c9.io/API/event.php?msg=query";
-
+var fields = ["Name","Date","Location","Time","Description","FB"];
 
 
 var Event = React.createClass({
@@ -8,13 +8,21 @@ var Event = React.createClass({
         return {
             event:"",
             editMode:false,
-            delete:false
+            delete:false,
+            changeQueue:{}
         };
     },
     componentDidMount:function(){
         this.setState({
             event:this.props.event
-        })
+        });
+    },
+    queueChange:function(e){
+        var temp = this.state.changeQueue;
+        temp[e.target.name] = e.target.value;
+        this.setState({
+            changeQueue:temp
+        });
     },
     render:function(){
         var re = this;
@@ -23,24 +31,50 @@ var Event = React.createClass({
         if(this.state.editMode){
             return (<div className="event card blue darken-4">
             <div className="card-content white-text">
-               <input type="text" className="card-title" value={this.state.event.Name}/>
+               <input type="text" name="Name" className="card-title" defaultValue={this.state.event.Name} onChange={this.queueChange}/>
                <p>
-                  <input type="text" className="card-title" value={this.state.event.Date}/>
-                  <input type="text" className="card-title" value={this.state.event.Time}/>
-                  <input type="text" className="card-title" value={this.state.event.Location}/>
+                  <input type="text" className="card-title" defaultValue={this.state.event.Date} onChange={this.queueChange}/>
+                  <input type="text" className="card-title" defaultValue={this.state.event.Time} onChange={this.queueChange}/>
+                  <input type="text" className="card-title" defaultValue={this.state.event.Location} onChange={this.queueChange}/>
                   <p>
-                  <textarea name="" className="materialize-textarea" value={this.state.event.Description}></textarea>
+                  <textarea name="" className="materialize-textarea" defaultValue={this.state.event.Description} onChange={this.queueChange}></textarea>
                   </p>
-                  <input type="text" className="card-title" value={this.state.event.FB}/>
+                  <input type="text" className="card-title" defaultValue={this.state.event.FB} onChange={this.queueChange}/>
                </p>
             </div>
             <div className="card-action">
+            
                <button onClick={function(){
-                   
+                   var temp = re.state.changeQueue;
+                  fields.forEach(function(field){
+                      if(temp[field] === undefined){
+                          temp[field] = re.state.event[field]
+                      }
+                  });
+                  temp.EID = re.state.event.EID;
+                  $.get(query, {
+                      msg: "query",
+                      eid: re.state.event.EID
+                  }, function(data) {
+                      var newEvent = {};
+                      for(var field in temp){
+                         newEvent[field] = temp[field];
+                      }
+                      newEvent.EID = re.state.event.EID;
+                      console.log(newEvent);
+                      re.setState({
+                          editMode:false,
+                          event:newEvent,
+                          changeQueue:{},
+                      });
+                      
+                  }.bind(re));
                }}>Add</button>
+               
                <button onClick={function(){
                    re.setState({
-                       editMode:false
+                       editMode:false,
+                       changeQueue:{}
                    });
                }}>Cancel</button>
             </div>
