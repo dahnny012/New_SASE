@@ -38,7 +38,7 @@
         logg("Del Test:");
         clear();
         $_POST["msg"] = "delete";
-        $_POST["eid"] = 1;
+        $_POST["EID"] = 1;
         $controller = new Event_Controller() or die("Could not instantiate controller");
         $data = $controller->fetch($_POST);
         if($data == null){
@@ -55,12 +55,12 @@
         logg("Insert Test:");
         clear();
         $_POST["msg"] = "insert";
-        $_POST["name"] = "InsertTest";
-        $_POST["date"] = "2015-05-25";
-        $_POST["time"] = "05-06-00";
-        $_POST["location"] = "Danhs House";
-        $_POST["description"] = "Test Insertion Test";
-        $_POST["fb"] = "https://example.com";
+        $_POST["Name"] = "InsertTest";
+        $_POST["Date"] = "2015-05-25";
+        $_POST["Time"] = "05-06-00";
+        $_POST["Location"] = "Danhs House";
+        $_POST["Description"] = "Test Insertion Test";
+        $_POST["FB"] = "https://example.com";
         $controller = new Event_Controller() or die("Could not instantiate controller");
         $data = $controller->fetch($_POST);
         if($data == null){
@@ -77,13 +77,13 @@
         logg("Edit Test:");
         clear();
         $_POST["msg"] = "edit";
-        $_POST["name"] = "InsertTest";
-        $_POST["date"] = "2015-05-25";
-        $_POST["time"] = "05-06-00";
-        $_POST["location"] = "Danhs House";
-        $_POST["description"] = "Test Insertion Test";
-        $_POST["fb"] = "https://example.com";
-        $_POST["id"] = 1;
+        $_POST["Name"] = "InsertTest";
+        $_POST["Date"] = "2015-05-25";
+        $_POST["Time"] = "05-06-00";
+        $_POST["Location"] = "Danhs House";
+        $_POST["Description"] = "Test Insertion Test";
+        $_POST["FB"] = "https://example.com";
+        $_POST["EID"] = 1;
         $controller = new Event_Controller() or die("Could not instantiate controller");
         $data = $controller->fetch($_POST);
         if($data == null){

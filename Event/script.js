@@ -1,5 +1,6 @@
 moment().format();
 var query = "https://new-sase-dahnny012.c9.io/API/event.php?msg=query";
+var post = "https://new-sase-dahnny012.c9.io/API/event.php";
 var fields = ["Name","Date","Location","Time","Description","FB"];
 
 
@@ -100,8 +101,9 @@ var Event = React.createClass({
                        });
                    }}>Edit</button>
                    <button onClick={function(){
-                       $.get(query,{msg:"query",eid:re.state.event.EID},function(data){
-                           console.log(re.state.event.EID);
+                       $.post(post,{msg:"delete",EID:re.state.event.EID},function(data){
+                           data =  JSON.parse(data);
+                           console.log(data);
                             re.setState({
                                 delete:true
                             });
@@ -116,7 +118,7 @@ var Event = React.createClass({
 var EventList = React.createClass({
     getInitialState: function() {
         return {
-            events:[""]
+            events:[]
         };
     },
 
@@ -139,6 +141,9 @@ var EventList = React.createClass({
 
     render: function() {
         var re = this;
+        if(this.state.events.length <= 0 ){
+            return null;
+        }
         var nodes =  this.state.events.map(function(e){
             return (<Event
             event = {e}
