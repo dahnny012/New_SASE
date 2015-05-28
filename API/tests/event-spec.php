@@ -57,7 +57,7 @@
         $_POST["msg"] = "insert";
         $_POST["Name"] = "InsertTest";
         $_POST["Date"] = "2015-05-25";
-        $_POST["Time"] = "05-06-00";
+        $_POST["Time"] = "05:06:00";
         $_POST["Location"] = "Danhs House";
         $_POST["Description"] = "Test Insertion Test";
         $_POST["FB"] = "https://example.com";
@@ -79,7 +79,7 @@
         $_POST["msg"] = "edit";
         $_POST["Name"] = "InsertTest";
         $_POST["Date"] = "2015-05-25";
-        $_POST["Time"] = "05-06-00";
+        $_POST["Time"] = "05:06:00";
         $_POST["Location"] = "Danhs House";
         $_POST["Description"] = "Test Insertion Test";
         $_POST["FB"] = "https://example.com";

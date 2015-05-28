@@ -46,23 +46,40 @@ var Event = React.createClass({
             <div className="card-action">
             
                <button onClick={function(){
+                   // Copy Over All Non Changed Data
                    var temp = re.state.changeQueue;
                   fields.forEach(function(field){
                       if(temp[field] === undefined){
                           temp[field] = re.state.event[field]
                       }
                   });
+                  
+                  // Grab the ID
                   temp.EID = re.state.event.EID;
-                  $.get(query, {
-                      msg: "query",
-                      eid: re.state.event.EID
+                  
+                  // Send the blob of info
+                  $.post(post, {
+                      msg: "edit",
+                      EID: temp.EID,
+                      Name:temp.Name,
+                      Location:temp.Location,
+                      Time:temp.Time,
+                      Date:temp.Date,
+                      Description:temp.Description,
+                      FB:temp.FB
+                      
                   }, function(data) {
+                      data = JSON.parse(data);
+                      if(data.status !== "success"){
+                          alert("Edit was not successful");
+                          return;
+                      }
                       var newEvent = {};
+                      // If successful edit, reflect changes in UI
                       for(var field in temp){
                          newEvent[field] = temp[field];
                       }
                       newEvent.EID = re.state.event.EID;
-                      console.log(newEvent);
                       re.setState({
                           editMode:false,
                           event:newEvent,
@@ -103,10 +120,14 @@ var Event = React.createClass({
                    <button onClick={function(){
                        $.post(post,{msg:"delete",EID:re.state.event.EID},function(data){
                            data =  JSON.parse(data);
-                           console.log(data);
+                           if(data.status !== "success"){
+                               alert("Delete was not successful");
+                               return;
+                           }
                             re.setState({
                                 delete:true
                             });
+
                         }.bind(re));
                    }}>Delete</button>
                 </div>
