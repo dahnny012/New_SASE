@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors','1'); error_reporting(E_ALL);
+include "time.php";
 
     class Event_View{
         private $data;
@@ -7,11 +8,12 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
             $this->data = $data;
         }
         public function render(){
-            echo $this->data;
+            echo json_encode($this->data);
         }
         
         public function log(){
-            return json_decode($this->data,true);
+            var_dump($this->data);
+            return $this->data;
         }
     }
     
@@ -26,8 +28,15 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
             // To test React-Ajax connection.
             $query = $this->db->prepare("Select * from Events");
             $query->execute();
-            $rows = $query->fetchAll(PDO::FETCH_ASSOC);
-            return json_encode($rows);
+            $rows = [];
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $date = new Time($row['Date']);
+                $time = new Time($row['Time']);
+                $row['Date'] = $date->toDate();
+                $row['Time'] = $time->toTime();
+                $rows[] = $row;
+            }
+            return $rows;
         }
         
         public function insert($event){
@@ -79,6 +88,7 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
             if(!$this->authenticate($data)){
                 return message("error");
             }
+            //formatDate($data);
             switch($data["msg"]){
                 case "edit":
                     return $this->model->edit($data);
@@ -111,7 +121,7 @@ ini_set('display_errors','1'); error_reporting(E_ALL);
         $msg = array();
         $msg["status"] = $status;
         $msg["data"] = $data;
-        return json_encode($msg);
+        return $msg;
     }
     
 $controller = new Event_Controller();
@@ -124,7 +134,8 @@ if(!empty($_GET)){
     $view = new Event_View($data);
     $view->render();
 }else{
-    echo message("error");
+    $view = new Event_View(message("error"));
+    $view->render();
 }
 
     

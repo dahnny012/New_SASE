@@ -16,7 +16,7 @@
       <div class="nav-wrapper blue darken-3">
          <a href="#" class="brand-logo">Admin</a>
          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Events</a>
+            <li><a href="https://new-sase-dahnny012.c9.io/Event/">Events</a>
             </li>
             <li><a href="components.html">News</a>
             </li>
@@ -31,6 +31,8 @@
          <div class="col s4">
             <h2 class="header">
                Events </h1>
+                 <input type="date" class="datepicker">
+                 <input type="time" class="timepicker">
             </div>
             <div class="row">
                <Modal class="col s12" id="Modal">
@@ -43,5 +45,11 @@
 
 </html>
 <script>
-
+var test = $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 2, // Creates a dropdown of 15 years to control year
+    format: 'mmmm d, yyyy',
+  });
+  
+  var test =$(".timepicker").pickatime();
 </script>
