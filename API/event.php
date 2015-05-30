@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors','1'); error_reporting(E_ALL);
 include "time.php";
+include "queries.php";
 
     class Event_View{
         private $data;
@@ -24,9 +25,9 @@ include "time.php";
             $this->db = $db;
         }
         
-        public function get(){
-            // To test React-Ajax connection.
-            $query = $this->db->prepare("Select * from Events ORDER BY EID DESC");
+        public function get($data){
+            $restCall = new Event_Query($data);
+            $query = $this->db->prepare($restCall->parse());
             $query->execute();
             $rows = [];
             while($row = $query->fetch(PDO::FETCH_ASSOC)){
@@ -83,7 +84,7 @@ include "time.php";
                 return message("error");
             }
             if($data["msg"] == "query"){
-                return $this->model->get();   
+                return $this->model->get($data);   
             }
             if(!$this->authenticate($data)){
                 return message("error");

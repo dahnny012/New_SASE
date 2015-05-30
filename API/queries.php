@@ -36,7 +36,7 @@
                 $time = $get["byTime"];
                 $base .= "Time = \"$time\"";
             }else{
-                $base ="Select * from Events";
+                $base ="Select * from Events ORDER BY EID DESC";
             }
             
             $this->query = $base;
