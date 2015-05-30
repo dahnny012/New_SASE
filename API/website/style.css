@@ -5,3 +5,16 @@
 .header{
     font-weight:300;
 }
+
+.row_header{
+    font-weight:500;
+}
+
+.row_value{
+    font-weight:300;
+}
+
+.code{
+    padding-top:10px;
+    background:#eeeeee;
+}
