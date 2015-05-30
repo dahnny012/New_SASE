@@ -204,6 +204,29 @@ var Modal = React.createClass({
 });
 
 var EventForm = React.createClass({
+    getInitialState: function() {
+      return {userInput: ''};
+    },
+    handleSubmit:function(){
+        var re = this;
+        var data = {
+            Name:React.findDOMNode(this.refs.Name).value,
+            Date:React.findDOMNode(re.refs.Date).value,
+            Location:React.findDOMNode(re.refs.Location).value,
+            Time:React.findDOMNode(re.refs.Time).value,
+            Description:React.findDOMNode(re.refs.Description).value,
+            FB:React.findDOMNode(re.refs.FB).value,
+            msg:"insert"
+        };
+        $.post(post,data,function(data){
+            data = JSON.parse(data);
+            if(data.status !== "success"){
+                alert("Something wrong with Input");
+                return;
+            }
+            window.location.reload();
+        });
+    },
     render:function(){
         return (
     <div className="formWrapper">
@@ -215,38 +238,38 @@ var EventForm = React.createClass({
         <div className="row">
       <div className="col s4 offset-s2">
         <label>Name</label>
-        <input type="text"/>
+        <input type="text" ref="Name"/>
       </div>
       <div className="col s4">
         <label> Date</label>
-        <input type="text"/>
+        <input type="date" ref="Date"/>
       </div>
     </div>
 
     <div className="row">
       <div className="col s4 offset-s2">
         <label>Location</label>
-        <input type="text"/>
+        <input type="text" ref="Location"/>
       </div>
       <div className="col s4">
         <label>Time</label>
-        <input type="text"/>
+        <input type="time" ref="Time"/>
       </div>
     </div>
 
     <div className="row">
       <div className="col s4 offset-s2">
         <label>Facebook Link</label>
-        <input type="text"/>
+        <input type="text" ref="FB"/>
       </div>
       <div className="col s4">
         <label>Description</label>
-        <textarea name="address" className="materialize-textarea"></textarea>
+        <textarea className="materialize-textarea" ref="Description"></textarea>
       </div>
     </div>
         <div className="row">
         <div className="col s4 offset-s2">
-      <button className="btn">Submit</button>
+      <button className="btn" onClick={this.handleSubmit}>Submit</button>
       </div>
     </div>
     </div>);

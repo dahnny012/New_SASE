@@ -26,7 +26,7 @@ include "time.php";
         
         public function get(){
             // To test React-Ajax connection.
-            $query = $this->db->prepare("Select * from Events");
+            $query = $this->db->prepare("Select * from Events ORDER BY EID DESC");
             $query->execute();
             $rows = [];
             while($row = $query->fetch(PDO::FETCH_ASSOC)){

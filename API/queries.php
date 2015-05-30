@@ -6,32 +6,35 @@
             $base = "Select * from Events Where ";
             
             
-            if($get["byMonth"]){
+            if(isset($get["byMonth"])){
                 $month = $get["byMonth"];
                 $base .= "Month(Date) = $month";   
             }
-            else if($get["byYear"]){
-                $month = $get["byYear"];
+            else if(isset($get["byYear"])){
+                $year = $get["byYear"];
                 $base .= "Year(Date) = $year";   
             }
-            else if($get["byDate"]){
+            else if(isset($get["byDate"])){
                 $date = $get["byDate"];
+                if(!isset($get["timeframe"])){
+                    $get["timeframe"] = "default";
+                }
                 switch($get["timeframe"]){
                     case "past":
-                        $base .= "Date < ";
+                        $base .= "Date <= ";
                         break;
                     case "future":
-                        $base .= "Date > ";
+                        $base .= "Date >= ";
                         break;
                     default:
                         $base .= "Date = ";
                 }
                 
-                $base .= $date;
+                $base .= "\"$date\"";
             }
-            else if($get["byTime"]){
+            else if(isset($get["byTime"])){
                 $time = $get["byTime"];
-                $base .= "Time = $time";
+                $base .= "Time = \"$time\"";
             }else{
                 $base ="Select * from Events";
             }
@@ -41,6 +44,13 @@
         
         public function parse(){
             return $this->query;
+        }
+        
+        public function execute(){
+            include "../connection.php";
+            $query = $db->prepare($this->query);
+            $query->execute();
+            return $query;
         }
     }
 ?>
