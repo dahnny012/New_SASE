@@ -15,4 +15,18 @@
              echo "Insert Failed <br>";
          }
     }
+    
+    $json = file_get_contents("../news.json");
+    $data = json_decode($json)->news;
+    foreach($data as $news){
+         $insert = $db->prepare("INSERT INTO News (Title,Date,Content,ImageSrc) VALUES (?,?,?,?)");
+         $insert->bindParam(1,$news->Title);
+         $insert->bindParam(2,$news->Date);
+         $insert->bindParam(3,$news->Content);
+         $insert->bindParam(4,$news->ImageSrc);
+         $insert->execute();
+         if(!$insert->rowCount()){
+             echo "Insert Failed <br>";
+         }
+    }
 ?>

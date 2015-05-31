@@ -2,19 +2,11 @@
 ini_set('display_errors','1'); error_reporting(E_ALL);
 include "time.php";
 include "queries.php";
+include "generics.php";
 
-    class Event_View{
-        private $data;
+    class Event_View extends View{
         public function __construct($data){
-            $this->data = $data;
-        }
-        public function render(){
-            echo json_encode($this->data);
-        }
-        
-        public function log(){
-            var_dump($this->data);
-            return $this->data;
+            parent::__construct($data);
         }
     }
     
@@ -108,22 +100,7 @@ include "queries.php";
         }
     }
     
-    // Psuedo-Class i dont want to deal with serialization
-    function status($query,$data=null){
-        $status;
-        if(!$query->rowCount()){
-            $status = message("error");
-        }else{
-            $status = message("success");
-        }
-        return $status;
-    }
-    function message($status,$data=null){
-        $msg = array();
-        $msg["status"] = $status;
-        $msg["data"] = $data;
-        return $msg;
-    }
+   
     
 $controller = new Event_Controller();
 if(!empty($_GET)){

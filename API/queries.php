@@ -53,4 +53,53 @@
             return $query;
         }
     }
+    
+    class News_Query{
+        public $query;
+        public function __construct($get){
+            
+            $base = "Select * from News Where ";
+            
+            
+            if(isset($get["byTitle"])){
+                $title = "%".$get["byMonth"]."%";
+                $base .= "Title Like = $title";   
+            }
+            else if(isset($get["byDate"])){
+                $date = $get["byDate"];
+                if(!isset($get["timeframe"])){
+                    $get["timeframe"] = "default";
+                }
+                switch($get["timeframe"]){
+                    case "past":
+                        $base .= "Date <= ";
+                        break;
+                    case "future":
+                        $base .= "Date >= ";
+                        break;
+                    default:
+                        $base .= "Date = ";
+                }
+                
+                $base .= "\"$date\"";
+            }else{
+                $base ="Select * from News ORDER BY NID DESC";
+            }
+            
+            $this->query = $base;
+        }
+        
+        public function parse(){
+            return $this->query;
+        }
+        
+        public function execute(){
+            include "../connection.php";
+            $query = $db->prepare($this->query);
+            $query->execute();
+            return $query;
+        }
+    }
 ?>
+
+

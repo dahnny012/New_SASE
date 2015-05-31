@@ -15,4 +15,16 @@
      UNIQUE KEY EID (EID)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
+    
+    
+    $create = $db->prepare("CREATE TABLE IF NOT EXISTS News (
+     NID int(8) NOT NULL auto_increment,
+     Title varchar(255) NOT NULL,
+     Date Date NOT NULL,
+     Content varchar(1000) NOT NULL,
+     ImageSrc varchar(255),
+     PRIMARY KEY (NID),
+     UNIQUE KEY EID (NID)
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+    $create->execute();
 ?>
