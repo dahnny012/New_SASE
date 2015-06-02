@@ -65,21 +65,25 @@ class News_Controller extends Controller{
     public function __construct(){
         parent::__construct(new News_Model());
     }
+    
+    public function run(){
+        if(!empty($_GET)){
+            $data = $this->fetch($_GET);
+            $view = new News_View($data);
+            $view->render();
+        }else if(!empty($_POST)){
+            $data = $this->fetch($_POST);
+            $view = new News_View($data);
+            $view->render();
+        }else{
+            $view = new News_View(message("error"));
+            $view->render();
+        }
+    }
 }
 
 $controller = new News_Controller();
-if(!empty($_GET)){
-    $data = $controller->fetch($_GET);
-    $view = new News_View($data);
-    $view->render();
-}else if(!empty($_POST)){
-    $data = $controller->fetch($_POST);
-    $view = new News_View($data);
-    $view->render();
-}else{
-    $view = new News_View(message("error"));
-    $view->render();
-}
+$controller->run();
 
 
 ?>

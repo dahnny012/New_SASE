@@ -69,24 +69,27 @@ include "mvc.php";
         public function __construct(){
             parent::__construct(new Event_Model());
         }
+        
+        public function run(){
+            if(!empty($_GET)){
+                $data = $this->fetch($_GET);
+                $view = new Event_View($data);
+                $view->render();
+            }else if(!empty($_POST)){
+                $data = $this->fetch($_POST);
+                $view = new Event_View($data);
+                $view->render();
+            }else{
+                $view = new Event_View(message("error"));
+                $view->render();
+            }
+        }
     }
     
    
     
 $controller = new Event_Controller();
-if(!empty($_GET)){
-    $data = $controller->fetch($_GET);
-    $view = new Event_View($data);
-    $view->render();
-}else if(!empty($_POST)){
-    $data = $controller->fetch($_POST);
-    $view = new Event_View($data);
-    $view->render();
-}else{
-    $view = new Event_View(message("error"));
-    $view->render();
-}
-
+$controller->run();
     
     
         

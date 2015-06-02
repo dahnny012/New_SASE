@@ -47,6 +47,21 @@
         public function __construct($model){
             $this->model = $model;
         }
+        
+        public function run(){
+            if(!empty($_GET)){
+                $data = $controller->fetch($_GET);
+                $view = new View($data);
+                $view->render();
+            }else if(!empty($_POST)){
+                $data = $controller->fetch($_POST);
+                $view = new View($data);
+                $view->render();
+            }else{
+                $view = new View(message("error"));
+                $view->render();
+            }
+        }
         public function fetch($data=["msg"=>""]){
             if(empty($data["msg"])){
                 return message("error");

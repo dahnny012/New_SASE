@@ -2,6 +2,7 @@ var query = "https://new-sase-dahnny012.c9.io/API/news.php?msg=query";
 var post = "https://new-sase-dahnny012.c9.io/API/news.php";
 var fields = ["Title","Date","Content","ImageSrc"];
 
+
 var News = React.createClass({
     getInitialState: function() {
         return {
@@ -45,6 +46,8 @@ var News = React.createClass({
         });
     },
     render:function(){
+        
+        return null;
         var re = this;
         if(this.state.delete)
             return null;
@@ -169,6 +172,8 @@ var NewsList = React.createClass({
     }
 });
 
+
+
 var Modal = React.createClass({
     getInitialState:function(){
         return {
@@ -255,8 +260,9 @@ var NewsForm = React.createClass({
 }); 
 
 
-React.render( <NewsList source = "https://new-sase-dahnny012.c9.io/API/news.php?msg=query"/> 
+React.render( <NewsList source = "https://new-sase-dahnny012.c9.io/API/news.php"/> 
 , document.getElementById("news"));
+
 
 
 React.render(<Modal/>,document.getElementById("Modal"));
