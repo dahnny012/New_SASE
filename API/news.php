@@ -2,6 +2,7 @@
 ini_set('display_errors','1'); error_reporting(E_ALL);
 include "time.php";
 include "queries.php";
+include "mvc.php";
 
 class News_View extends View{
     public function __construct($data){
@@ -11,21 +12,20 @@ class News_View extends View{
 
 
 class News_Model extends Model{
+    public $db;
     public function __construct(){
-        parent::__construct($data);
+        include "connection.php";
+        $this->db = $db;
     }
     
     public function get($data){
-        return;
         $restCall = new News_Query($data);
         $query = $this->db->prepare($restCall->parse());
         $query->execute();
         $rows = [];
         while($row = $query->fetch(PDO::FETCH_ASSOC)){
             $date = new Time($row['Date']);
-            $time = new Time($row['Time']);
             $row['Date'] = $date->toDate();
-            $row['Time'] = $time->toTime();
             $rows[] = $row;
         }
         return $rows;
@@ -42,7 +42,7 @@ class News_Model extends Model{
     }
     
     public function edit($news){
-        $edit = $this->db->prepare("Update Events Set Title = ?, Date = ?, Content = ?, ImageSrc = ? WHERE NID = ?");
+        $edit = $this->db->prepare("Update News Set Title = ?, Date = ?, Content = ?, ImageSrc = ? WHERE NID = ?");
         $edit->bindParam(1,$news["Title"]);
         $edit->bindParam(2,$news["Date"]);
         $edit->bindParam(3,$news["Content"]);
@@ -52,9 +52,9 @@ class News_Model extends Model{
         return status($edit);
     }
     
-    public function delete($event){
-        $delete = $this->db->prepare("Delete from Events Where NID = ?");
-        $delete->bindParam(1,$event["NID"]);
+    public function delete($news){
+        $delete = $this->db->prepare("Delete from News Where NID = ?");
+        $delete->bindParam(1,$news["NID"]);
         $delete->execute();
         return status($delete);
     }
@@ -62,11 +62,24 @@ class News_Model extends Model{
 
 
 class News_Controller extends Controller{
-    public function __contruct(){
-        parent::__construct($data);
+    public function __construct(){
+        parent::__construct(new News_Model());
     }
 }
 
+$controller = new News_Controller();
+if(!empty($_GET)){
+    $data = $controller->fetch($_GET);
+    $view = new News_View($data);
+    $view->render();
+}else if(!empty($_POST)){
+    $data = $controller->fetch($_POST);
+    $view = new News_View($data);
+    $view->render();
+}else{
+    $view = new News_View(message("error"));
+    $view->render();
+}
 
 
 ?>

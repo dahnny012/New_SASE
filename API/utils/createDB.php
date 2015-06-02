@@ -16,7 +16,8 @@
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
     
-    
+    $drop = $db->prepare("DROP TABLE IF EXISTS News");
+    $drop->execute();
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS News (
      NID int(8) NOT NULL auto_increment,
      Title varchar(255) NOT NULL,
@@ -24,7 +25,7 @@
      Content varchar(1000) NOT NULL,
      ImageSrc varchar(255),
      PRIMARY KEY (NID),
-     UNIQUE KEY EID (NID)
+     UNIQUE KEY NID (NID)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
 ?>

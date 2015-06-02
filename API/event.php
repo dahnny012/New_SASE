@@ -2,7 +2,7 @@
 ini_set('display_errors','1'); error_reporting(E_ALL);
 include "time.php";
 include "queries.php";
-include "generics.php";
+include "mvc.php";
 
     class Event_View extends View{
         public function __construct($data){
@@ -10,7 +10,7 @@ include "generics.php";
         }
     }
     
-    class Event_Model{
+    class Event_Model extends Model{
         public $db;
         public function __construct(){
             include "connection.php";
@@ -65,38 +65,9 @@ include "generics.php";
         }
     }
     
-    class Event_Controller{
-        private $model;
-        private $view;
+    class Event_Controller extends Controller{
         public function __construct(){
-            $this->model = new Event_Model();
-        }
-        public function fetch($data=["msg"=>""]){
-            if(empty($data["msg"])){
-                return message("error");
-            }
-            if($data["msg"] == "query"){
-                return $this->model->get($data);   
-            }
-            if(!$this->authenticate($data)){
-                return message("error");
-            }
-            //formatDate($data);
-            switch($data["msg"]){
-                case "edit":
-                    return $this->model->edit($data);
-                case "delete":
-                    return $this->model->delete($data);
-                case "insert":
-                    return $this->model->insert($data);
-                    
-                default:
-                    return message("error");
-            }
-        }
-        public function authenticate($data){
-            return true;
-            // blah blah 
+            parent::__construct(new Event_Model());
         }
     }
     
