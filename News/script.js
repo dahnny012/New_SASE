@@ -24,10 +24,10 @@ var News = React.createClass({
             changeQueue:temp
         });
     },
-    deleteNode:function(e){
+    handleDelete:function(e){
          $.post(post, {
              msg: "delete",
-             EID: this.state.news.NID
+             NID: this.state.news.NID
          }, function(data) {
              data = JSON.parse(data);
              if (data.status !== "success") {
@@ -46,22 +46,17 @@ var News = React.createClass({
         });
     },
     render:function(){
-        
-        return null;
         var re = this;
         if(this.state.delete)
             return null;
         if(this.state.editMode){
             return (<div className="event card blue darken-4">
             <div className="card-content white-text">
-               <input type="text" name="Name" className="card-title" defaultValue={this.state.news.Title} onChange={this.queueChange}/>
-               <p>
-                  <input type="text" className="card-title" defaultValue={this.state.news.Date} onChange={this.queueChange}/>
-                  <p>
-                  <textarea name="" className="materialize-textarea" defaultValue={this.state.news.Content} onChange={this.queueChange}></textarea>
-                  </p>
-                  <input type="text" className="card-title" defaultValue={this.state.news.ImageSrc} onChange={this.queueChange}/>
-               </p>
+                <input type="text" placeholder="Title" className="card-title" defaultValue={this.state.news.Title} onChange={this.queueChange}/>
+                <input type="text" placeholder="Date" className="card-title" defaultValue={this.state.news.Date} onChange={this.queueChange}/>
+                <textarea name="" placeholder="Content" className="materialize-textarea" defaultValue={this.state.news.Content} onChange={this.queueChange}/>
+                <input type="file" />
+                <input type="url" placeholder="Url"/>
             </div>
             <div className="card-action">
             
@@ -118,16 +113,14 @@ var News = React.createClass({
         }
         return (<div className="event card blue darken-4">
                   <div className="card-content white-text">
-                     <div className="card-image">
+                     <div className="card-image image-src">
               <img src={this.state.news.ImageSrc}/>
             </div>
                      <span className="card-title">{this.state.news.Title}</span>
-                     <p>
+                     <p/>
                         <span className="eventLogistics">{this.state.news.Date}</span>
-                     <p>
-                        {this.state.news.Content}
-                     </p>
-                     </p>
+                     <p/>
+                        <span>{this.state.news.Content}</span>
                   </div>
                   <div className="card-action">
                      <button onClick={this.handleEdit}>Edit</button>
@@ -242,10 +235,17 @@ var NewsForm = React.createClass({
 
     <div className="row">
       <div className="col s4 offset-s2">
-        <label>Image Source</label>
+        <label>Image Url</label>
         <input type="text" ref="ImageSrc"/>
       </div>
       <div className="col s4">
+        <label>Image File</label>
+        <p/>
+        <input type="file" ref="ImageFile"/>
+      </div>
+    </div>
+    <div className="row">
+          <div className="col s4 offset-s2">
         <label>Content</label>
         <textarea className="materialize-textarea" ref="Content"></textarea>
       </div>

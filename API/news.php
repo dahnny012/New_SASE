@@ -56,6 +56,8 @@ class News_Model extends Model{
         $delete = $this->db->prepare("Delete from News Where NID = ?");
         $delete->bindParam(1,$news["NID"]);
         $delete->execute();
+        
+        // Try to Delete Image associated with it.
         return status($delete);
     }
 }
