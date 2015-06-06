@@ -18,3 +18,15 @@
     padding-top:10px;
     background:#eeeeee;
 }
+
+.bold{
+    font-weight: bold;
+}
+
+.italic{
+    font-style: italic;
+}
+
+table.striped tbody tr:nth-child(odd){
+    background-color:#eeeeee;
+}

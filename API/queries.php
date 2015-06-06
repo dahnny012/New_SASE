@@ -4,15 +4,23 @@
         public function __construct($get){
             
             $base = "Select * from Events Where ";
-            
+            $and = false;
+            $mod = false;
             
             if(isset($get["byMonth"])){
                 $month = $get["byMonth"];
-                $base .= "Month(Date) = $month";   
+                $base .= "Month(Date) = $month";
+                $and = true;
+                $mode = true;
             }
-            else if(isset($get["byYear"])){
+            if(isset($get["byYear"])){
                 $year = $get["byYear"];
-                $base .= "Year(Date) = $year";   
+                if($and){
+                    $base .= " AND ";
+                }
+                $base .= "Year(Date) = $year";
+                $and = true;
+                $mode = true;
             }
             else if(isset($get["byDate"])){
                 $date = $get["byDate"];
@@ -21,21 +29,28 @@
                 }
                 switch($get["timeframe"]){
                     case "past":
-                        $base .= "Date <= ";
+                        $base .= "Date(Date) <= ";
                         break;
                     case "future":
-                        $base .= "Date >= ";
+                        $base .= "Date(Date) >= ";
                         break;
                     default:
-                        $base .= "Date = ";
+                        $base .= "Date(Date) = ";
                 }
                 
                 $base .= "\"$date\"";
+                $and = true;
+                $mod = true;
             }
-            else if(isset($get["byTime"])){
+            if(isset($get["byTime"])){
                 $time = $get["byTime"];
-                $base .= "Time = \"$time\"";
-            }else{
+                if($and){
+                    $base .= " AND ";
+                }
+                $base .= "Time(Time) = \"$time\"";
+                $mod = true;
+            }
+            if(!$mod){
                 $base ="Select * from Events ORDER BY EID DESC";
             }
             
@@ -59,33 +74,52 @@
         public function __construct($get){
             
             $base = "Select * from News Where ";
-            
-            
+            $and = false;
+            $mode = false;
+            $lol = false;
             if(isset($get["byTitle"])){
-                $title = "%".$get["byMonth"]."%";
-                $base .= "Title Like = $title";   
+                $title = "%".$get["byTitle"]."%";
+                $base .= "Title Like = $title";
+                $and = true;
             }
-            else if(isset($get["byDate"])){
+            if(isset($get["byMonth"])){
+                $month = $get["byMonth"];
+                $base .= "Month(Date) = $month";
+                if($and){
+                    $base .= " AND ";
+                }
+                $and = true; $mode = true; $lol = true;
+            }
+            if(isset($get["byYear"])){
+                $year = $get["byYear"];
+                if($and){
+                    $base .= " AND ";
+                }
+                $base .= "Year(Date) = $year";
+                
+            }
+            else if(isset($get["byDate"] && !$lol)){
                 $date = $get["byDate"];
                 if(!isset($get["timeframe"])){
                     $get["timeframe"] = "default";
                 }
                 switch($get["timeframe"]){
                     case "past":
-                        $base .= "Date <= ";
+                        $base .= "Date(Date) <= ";
                         break;
                     case "future":
-                        $base .= "Date >= ";
+                        $base .= "Date(Date) >= ";
                         break;
                     default:
-                        $base .= "Date = ";
+                        $base .= "Date(Date) = ";
                 }
                 
                 $base .= "\"$date\"";
-            }else{
+                $mod = true;
+            }
+            if(!$mod){
                 $base ="Select * from News ORDER BY NID DESC";
             }
-            
             $this->query = $base;
         }
         

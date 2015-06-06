@@ -1,8 +1,8 @@
 <?php 
 
 include "../queries.php";
-
-    function byMonth(){
+function event_test(){
+    $byMonth = function(){
         $data = array();
         $data["byMonth"] = 9;
         $query = new Event_Query($data);
@@ -10,9 +10,9 @@ include "../queries.php";
         if($query->execute()->rowCount() < 1){
             throw("query failed");
         }
-    }
+    };
     
-    function byYear(){
+    $byYear = function(){
         $data = array();
         $data["byYear"] = 2015;
         $query = new Event_Query($data);
@@ -20,9 +20,9 @@ include "../queries.php";
         if($query->execute()->rowCount() < 1){
             throw("query failed");
         }
-    }
+    };
     
-    function byDate(){
+    $byDate = function(){
         $byFuture = function($data){
             $data["timeframe"] = "future";
             $query = new Event_Query($data);
@@ -49,9 +49,9 @@ include "../queries.php";
         }
         $byFuture($data);
         $byPast($data);  
-    }
+    };
     
-    function byTime(){
+    $byTime = function(){
         $data = array();
         $data["byTime"] = "12:12:00";
         $query = new Event_Query($data);
@@ -59,11 +59,44 @@ include "../queries.php";
         if($query->execute()->rowCount() < 1){
             die("time failed");
         }
-    }
+    };
     
-byMonth();
-byYear();
-byDate();
-byTime();
+    $byMonthByYear = function(){
+        $data = array();
+        $data["byYear"] = 2015;
+        $data["byMonth"] = 9;
+        $query = new Event_Query($data);
+        echo $query->parse();
+        if($query->execute()->rowCount() < 2){
+            die("query failed");
+        }
+    };
+    
+    $byDateByTime = function(){
+        $data = array();
+        $data["byDate"] = "2015-9-19";
+        $data["byTime"] = "14:30:00";
+        $query = new Event_Query($data);
+        echo $query->parse();
+        if($query->execute()->rowCount() < 1){
+            die("query failed");
+        }
+    };
+    $byMonth();
+    $byYear();
+    $byDate();
+    $byTime();
+    $byMonthByYear();
+    $byDateByTime();
+}
+
+
+function news_test(){
+    //$byTitle
+}
+
+event_test();
+    
+
 
 ?>
