@@ -11,7 +11,7 @@
                 $month = $get["byMonth"];
                 $base .= "Month(Date) = $month";
                 $and = true;
-                $mode = true;
+                $mod = true;
             }
             if(isset($get["byYear"])){
                 $year = $get["byYear"];
@@ -20,7 +20,7 @@
                 }
                 $base .= "Year(Date) = $year";
                 $and = true;
-                $mode = true;
+                $mod = true;
             }
             else if(isset($get["byDate"])){
                 $date = $get["byDate"];
@@ -75,12 +75,12 @@
             
             $base = "Select * from News Where ";
             $and = false;
-            $mode = false;
+            $mod = false;
             $lol = false;
             if(isset($get["byTitle"])){
-                $title = "%".html_entity_decode($get["byTitle"])."%";
-                $base .= "Title Like = $title";
-                $and = true;
+                $title = "\"%".html_entity_decode($get["byTitle"])."%\"";
+                $base .= "Title Like $title";
+                $and = true; $mod = true;
             }
             if(isset($get["byMonth"])){
                 $month = $get["byMonth"];
@@ -88,7 +88,7 @@
                 if($and){
                     $base .= " AND ";
                 }
-                $and = true; $mode = true; $lol = true;
+                $and = true; $mod = true; $lol = true;
             }
             if(isset($get["byYear"])){
                 $year = $get["byYear"];
@@ -96,9 +96,9 @@
                     $base .= " AND ";
                 }
                 $base .= "Year(Date) = $year";
-                
+                $mod = true;
             }
-            else if(isset($get["byDate"] && !$lol)){
+            else if(isset($get["byDate"]) && !$lol){
                 $date = $get["byDate"];
                 if(!isset($get["timeframe"])){
                     $get["timeframe"] = "default";
