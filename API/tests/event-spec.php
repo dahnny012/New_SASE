@@ -40,10 +40,8 @@
         $_POST["msg"] = "delete";
         $_POST["EID"] = 1;
         $controller = new Event_Controller() or die("Could not instantiate controller");
-        $data = $controller->fetch($_POST);
-        if($data == null){
-            die("Null data");
-        }
+        $controller->run();
+        $data = $controller->log;
         $view = new Event_View($data);
         $result = $view->log();
         test($result["status"],"success");
@@ -62,10 +60,8 @@
         $_POST["Description"] = "Test Insertion Test";
         $_POST["FB"] = "https://example.com";
         $controller = new Event_Controller() or die("Could not instantiate controller");
-        $data = $controller->fetch($_POST);
-        if($data == null){
-            die("Null data");
-        }
+        $controller->run();
+        $data = $controller->log;
         $view = new Event_View($data);
         $result = $view->log();
         test($result["status"],"success");
@@ -85,10 +81,8 @@
         $_POST["FB"] = "https://example.com";
         $_POST["EID"] = 1;
         $controller = new Event_Controller() or die("Could not instantiate controller");
-        $data = $controller->fetch($_POST);
-        if($data == null){
-            die("Null data");
-        }
+        $controller->run();
+        $data = $controller->log;
         $view = new Event_View($data);
         $result = $view->log();
         test($result["status"],"success");
@@ -96,6 +90,26 @@
         clear();
     }
     
+    function dateEditTest(){
+        logg("Edit Test:");
+        clear();
+        $_POST["msg"] = "edit";
+        $_POST["Name"] = "InsertTest";
+        $_POST["Date"] = "September 20, 2015";
+        $_POST["Time"] = "05:06:00";
+        $_POST["Location"] = "Danhs House";
+        $_POST["Description"] = "Test Insertion Test";
+        $_POST["FB"] = "https://example.com";
+        $_POST["EID"] = 1;
+        $controller = new Event_Controller();
+        $controller->run();
+        $data = $controller->log;
+        $view = new Event_View($data);
+        $result = $view->log();
+        test($result["status"],"success");
+        unset($_POST);
+        clear();
+    }
     
     
     function compare($arr,$arr2){
@@ -125,10 +139,12 @@
     function logg($msg){
         echo "$msg \n";
     }
-
+    
+    dateEditTest();
     initTest();
     simpleGetTest();
     simpleDelTest();
     simpleInsertTest();
-    simpleEditTest();
+    /simpleEditTest();
+    
 ?>

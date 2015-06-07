@@ -64,6 +64,7 @@ class News_Model extends Model{
 
 
 class News_Controller extends Controller{
+    public $log;
     public function __construct(){
         parent::__construct(new News_Model());
     }
@@ -74,7 +75,12 @@ class News_Controller extends Controller{
             $view = new News_View($data);
             $view->render();
         }else if(!empty($_POST)){
+            if(isset($_POST['Date'])){
+                $date = new Time($_POST['Date']);
+                $_POST['Date'] = $date->toDate(true);
+            }
             $data = $this->fetch($_POST);
+            $this->log = $data;
             $view = new News_View($data);
             $view->render();
         }else{

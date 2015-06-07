@@ -14,7 +14,7 @@ class Time{
     public function toTime($model=false){
         if($model)
             return $this->timeDataToModel();
-        return $this->timeModelToData();
+        return $this->data;
     }
     
     function timeModelToData(){
@@ -27,18 +27,6 @@ class Time{
             $hours -= 12;
         }
         return "$hours:".$split[1]." $meridian";
-    }
-    
-    function timeDataToModel(){
-        // Split the time
-        $split = preg_split("/:| /",$this->data);
-        $hours = $split[0];
-        if($split[2] == "PM"){
-            $hours = intval($split[0]);
-            $hours += 12;
-        }
-        
-        return "$hours:".$split[1].":00";
     }
 }
 ?>

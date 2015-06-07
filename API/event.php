@@ -54,7 +54,7 @@ include "mvc.php";
             $edit->bindParam(6,$event["FB"]);
             $edit->bindParam(7,$event["EID"]);
             $edit->execute();
-            return status($edit);
+            return status($edit,$event);
         }
         
         public function delete($event){
@@ -66,6 +66,7 @@ include "mvc.php";
     }
     
     class Event_Controller extends Controller{
+        public $log;
         public function __construct(){
             parent::__construct(new Event_Model());
         }
@@ -76,7 +77,12 @@ include "mvc.php";
                 $view = new Event_View($data);
                 $view->render();
             }else if(!empty($_POST)){
+                if(isset($_POST['Date'])){
+                    $date = new Time($_POST['Date']);
+                    $_POST['Date'] = $date->toDate(true);
+                }
                 $data = $this->fetch($_POST);
+                $this->log = $data;
                 $view = new Event_View($data);
                 $view->render();
             }else{
@@ -90,7 +96,6 @@ include "mvc.php";
     
 $controller = new Event_Controller();
 $controller->run();
-    
     
         
     

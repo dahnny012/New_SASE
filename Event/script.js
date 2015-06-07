@@ -34,13 +34,13 @@ var Event = React.createClass({
             <div className="card-content white-text">
                <input type="text" name="Name" className="card-title" defaultValue={this.state.event.Name} onChange={this.queueChange}/>
                <p>
-                  <input type="text" className="card-title" defaultValue={this.state.event.Date} onChange={this.queueChange}/>
-                  <input type="text" className="card-title" defaultValue={this.state.event.Time} onChange={this.queueChange}/>
-                  <input type="text" className="card-title" defaultValue={this.state.event.Location} onChange={this.queueChange}/>
+                  <input type="text" name="Date" className="card-title" defaultValue={this.state.event.Date} onChange={this.queueChange}/>
+                  <input type="Time" name="Time" className="card-title" defaultValue={this.state.event.Time} onChange={this.queueChange}/>
+                  <input type="text" name="Location" className="card-title" defaultValue={this.state.event.Location} onChange={this.queueChange}/>
                   <p>
-                  <textarea name="" className="materialize-textarea" defaultValue={this.state.event.Description} onChange={this.queueChange}></textarea>
+                  <textarea name="" name="Description" className="materialize-textarea" defaultValue={this.state.event.Description} onChange={this.queueChange}></textarea>
                   </p>
-                  <input type="text" className="card-title" defaultValue={this.state.event.FB} onChange={this.queueChange}/>
+                  <input type="text" name="FB" className="card-title" defaultValue={this.state.event.FB} onChange={this.queueChange}/>
                </p>
             </div>
             <div className="card-action">
@@ -53,7 +53,7 @@ var Event = React.createClass({
                           temp[field] = re.state.event[field]
                       }
                   });
-                  
+                  console.log(temp);
                   // Grab the ID
                   temp.EID = re.state.event.EID;
                   
@@ -69,6 +69,7 @@ var Event = React.createClass({
                       FB:temp.FB
                       
                   }, function(data) {
+                      console.log(data);
                       data = JSON.parse(data);
                       if(data.status !== "success"){
                           alert("Edit was not successful");
@@ -218,8 +219,14 @@ var EventForm = React.createClass({
             FB:React.findDOMNode(re.refs.FB).value,
             msg:"insert"
         };
+        console.log("time");
+        console.log(React.findDOMNode(re.refs.Time).value);
         $.post(post,data,function(data){
-            data = JSON.parse(data);
+            try{
+                data = JSON.parse(data);
+            }catch(err){
+                console.log(data);
+            }
             if(data.status !== "success"){
                 alert("Something wrong with Input");
                 return;

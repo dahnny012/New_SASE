@@ -52,10 +52,10 @@ var News = React.createClass({
         if(this.state.editMode){
             return (<div className="event card blue darken-4">
             <div className="card-content white-text">
-                <input type="text" placeholder="Title" className="card-title" defaultValue={this.state.news.Title} onChange={this.queueChange}/>
-                <input type="text" placeholder="Date" className="card-title" defaultValue={this.state.news.Date} onChange={this.queueChange}/>
-                <textarea name="" placeholder="Content" className="materialize-textarea" defaultValue={this.state.news.Content} onChange={this.queueChange}/>
-                <input type="file" />
+                <input type="text" placeholder="Title" name="Title" className="card-title" defaultValue={this.state.news.Title} onChange={this.queueChange}/>
+                <input type="text" placeholder="Date" name="Date" className="card-title" defaultValue={this.state.news.Date} onChange={this.queueChange}/>
+                <textarea name="" placeholder="Content" name="Content" className="materialize-textarea" defaultValue={this.state.news.Content} onChange={this.queueChange}/>
+                <input type="file"/>
                 <input type="url" placeholder="Url"/>
             </div>
             <div className="card-action">
@@ -70,13 +70,12 @@ var News = React.createClass({
                   });
                   
                   // Grab the ID
-                  temp.EID = re.state.news.EID;
-                  
+                  temp.NID = re.state.news.NID;
                   // Send the blob of info
                   $.post(post, {
                       msg: "edit",
-                      EID: temp.NID,
-                      Name:temp.Name,
+                      NID: temp.NID,
+                      Title:temp.Title,
                       Date:temp.Date,
                       Content:temp.Content,
                       ImageSrc:temp.ImageSrc
@@ -92,7 +91,7 @@ var News = React.createClass({
                       for(var field in temp){
                          newNews[field] = temp[field];
                       }
-                      newNews.EID = re.state.news.EID;
+                      newNews.NID = re.state.news.NID;
                       re.setState({
                           editMode:false,
                           news:newNews,
@@ -199,7 +198,7 @@ var NewsForm = React.createClass({
     handleSubmit:function(){
         var re = this;
         var data = {
-            Name:React.findDOMNode(this.refs.Title).value,
+            Title:React.findDOMNode(this.refs.Title).value,
             Date:React.findDOMNode(re.refs.Date).value,
             Content:React.findDOMNode(re.refs.Content).value,
             ImageSrc:React.findDOMNode(re.refs.ImageSrc).value,
@@ -224,7 +223,7 @@ var NewsForm = React.createClass({
         </div>
         <div className="row">
       <div className="col s4 offset-s2">
-        <label>Name</label>
+        <label>Title</label>
         <input type="text" ref="Title"/>
       </div>
       <div className="col s4">

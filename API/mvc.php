@@ -58,7 +58,7 @@
                 $view = new View($data);
                 $view->render();
             }else{
-                $view = new View(message("error"));
+                $view = new View(message("error",$data));
                 $view->render();
             }
         }
@@ -82,7 +82,7 @@
                     return $this->model->insert($data);
                     
                 default:
-                    return message("error");
+                    return message("error",$data);
             }
         }
         public function authenticate($data){
@@ -94,9 +94,9 @@
     function status($query,$data=null){
         $status;
         if(!$query->rowCount()){
-            $status = message("error");
+            $status = message("error",$data);
         }else{
-            $status = message("success");
+            $status = message("success",$data);
         }
         return $status;
     }
