@@ -92,7 +92,23 @@ function event_test(){
 
 
 function news_test(){
-    //$byTitle
+    $byTitle=function(){
+        
+    };
+    $byMonth=function(){
+        
+    };
+    $byDate=function(){
+        
+    };
+    $byMonthByYear=function(){
+        
+    };
+    
+    $byTitle();
+    $byMonth();
+    $byDate();
+    $byMonthByYear();
 }
 
 event_test();

@@ -78,7 +78,7 @@
             $mode = false;
             $lol = false;
             if(isset($get["byTitle"])){
-                $title = "%".$get["byTitle"]."%";
+                $title = "%".html_entity_decode($get["byTitle"])."%";
                 $base .= "Title Like = $title";
                 $and = true;
             }

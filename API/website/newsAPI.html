@@ -1,0 +1,176 @@
+<div class="section">
+    <div class="row">
+        <table class="striped col s12">
+            <thead>
+                <tr>
+                    <th>Return Field</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="bold">news</td>
+                    <td class="italic">Array containing the event objects</td>
+                </tr>
+                <tr>
+                    <td class="bold">Title</td>
+                    <td class="italic">String, name of News</td>
+                </tr>
+                <tr>
+                    <td class="bold">Date</td>
+                    <td class="italic">String, "December, 25 2015" format</td>
+                </tr>
+                <tr>
+                    <td class="bold">Content</td>
+                    <td class="italic">String, may contain HTML</td>
+                </tr>
+                <tr>
+                    <td class="bold">ImageSrc</td>
+                    <td class="italic">String, standard URL to image</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col s12">
+            <h4>Output</h4>
+        </div>
+        <div class="col s12">
+            <pre class="code">
+     {
+         "news": [{
+             "Title": "News Title",
+             "Date": "2015-09-10",
+             "Content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
+             "ImageSrc":"http://placehold.it/600x300"
+         }]
+     }
+                </pre>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col s6 blue darken-3 white-text">
+        <h3 class="header">byTitle</h3>
+    </div>
+    <div class="col s12 Section Description">
+        <p>
+            The byTitle will return a news with a title match or containing the query
+            <br> This can be combined with any other parameters as well.
+        </p>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Values</span>
+    </div>
+    <div class="col s9">
+        <i>It accepts a string</i>
+        <br><b>Use html entities for spaces,ampersands...etc</b>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Example REST Call</span>
+    </div>
+    <div class="col s9">
+        <i>HTTP://API_HOME_URL/news.php?msg=query<b>&byTime=News&amp;nbsp;Title</b></i>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6 blue darken-3 white-text">
+        <h3 class="header">byMonth</h3>
+    </div>
+    <div class="col s12 Section Description">
+        <p>
+            The byMonth parameter returns all news that are in that month.
+            <br> This can be combined with byYear
+        </p>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Values</span>
+    </div>
+    <div class="col s9">
+        <i>The byMonth parameter accepts values 1-12 for the corresponding month</i>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Example REST Call</span>
+    </div>
+    <div class="col s9">
+        <i>HTTP://API_HOME_URL/news.php?msg=query&<b>byMonth=9</b></i>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col s6 blue darken-3 white-text">
+        <h3 class="header">byYear</h3>
+    </div>
+    <div class="col s12 Section Description">
+        <p>
+            The byYear parameter returns all news that are in that Year.
+            <br> This can be combined with byMonth.
+        </p>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Values</span>
+    </div>
+    <div class="col s9">
+        <i>It accepts values any that can be considered a year</i>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Example REST Call</span>
+    </div>
+    <div class="col s9">
+        <i>HTTP://API_HOME_URL/news.php?msg=query<b>&byYear=2015</b></i>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6 blue darken-3 white-text">
+        <h3 class="header">byDate</h3>
+    </div>
+    <div class="col s12 Section Description">
+        <p>
+            The byDate parameter returns all news that match the exact date given.
+            <br/>The search can modified further by getting the lower or upper bound by using <b>timeframe</b>
+        </p>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s12">
+        <h5>byDate Values</h5>
+    </div>
+    <div class="col s3">
+        <span class="row_header">Values</span>
+    </div>
+    <div class="col s9">
+        <i>It accepts a date in a YYYY-MM-DD(2015-09-19) format</i>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Example REST Call</span>
+    </div>
+    <div class="col s9">
+        <i>HTTP://API_HOME_URL/news.php?msg=query<b>&byDate=2015-09-19</b></i>
+    </div>
+
+    <div class="col s12 divider"></div>
+    <div class="col s12">
+        <h5>timeframe Values</h5>
+    </div>
+    <div class="col s3">
+        <span class="row_header">Values</span>
+    </div>
+    <div class="col s9">
+        <i>It accepts either <b>future</b> or <b>past</b>. Where future
+                will return all news past the date and past will return all news before the date</i>
+    </div>
+    <div class="col s12 divider"></div>
+    <div class="col s3">
+        <span class="row_header">Example REST Call</span>
+    </div>
+    <div class="col s9">
+        <i>HTTP://API_HOME_URL/news.php?msg=query&byDate=2015-9-19<b>&timeframe=future</b></i>
+    </div>
+</div>
