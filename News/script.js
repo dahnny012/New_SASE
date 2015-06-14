@@ -195,23 +195,35 @@ var NewsForm = React.createClass({
     getInitialState: function() {
       return {userInput: ''};
     },
-    handleSubmit:function(){
+    handleSubmit:function(e){
+        e.preventDefault();
         var re = this;
+        var form = new FormData();
+        var file = this.refs.ImageFile.getDOMNode().files[0];
+        form.append("file",file);
         var data = {
-            Title:React.findDOMNode(this.refs.Title).value,
+            Title:React.findDOMNode(re.refs.Title).value,
             Date:React.findDOMNode(re.refs.Date).value,
             Content:React.findDOMNode(re.refs.Content).value,
             ImageSrc:React.findDOMNode(re.refs.ImageSrc).value,
             msg:"insert"
         };
-        $.post(post,data,function(data){
-            data = JSON.parse(data);
-            if(data.status !== "success"){
-                alert("Something wrong with Input");
-                return;
-            }
-            window.location.reload();
-        });
+        for(var field in data){
+            console.log(data[field]);
+            form.append(field,data[field]);
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', post, true);
+        xhr.onload = function() {
+          if (this.status == 200) {
+              var data = JSON.parse(this.response);
+              if(data.status == "success"){
+                  window.location.reload();
+              }
+          };
+      };
+      
+      xhr.send(form);
     },
     render:function(){
         return (
@@ -221,6 +233,7 @@ var NewsForm = React.createClass({
                   <h2 className="header">Add a News/Annoucement</h2>
           </div>
         </div>
+        <form encType="multipart/form-data" id="test" >
         <div className="row">
       <div className="col s4 offset-s2">
         <label>Title</label>
@@ -254,7 +267,9 @@ var NewsForm = React.createClass({
       <button className="btn" onClick={this.handleSubmit}>Submit</button>
       </div>
     </div>
-    </div>);
+    </form>
+    </div>
+    );
     },
 }); 
 

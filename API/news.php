@@ -13,9 +13,13 @@ class News_View extends View{
 
 class News_Model extends Model{
     public $db;
+    private $root;
+    private $docRoot;
     public function __construct(){
         include "connection.php";
         $this->db = $db;
+        $this->root = "/Assets/News/";
+        $this->docRoot = "/home/ubuntu/workspace";
     }
     
     public function get($data){
@@ -38,7 +42,14 @@ class News_Model extends Model{
         $insert->bindParam(3,$news["Content"]);
         $insert->bindParam(4,$news["ImageSrc"]);
         $insert->execute();
-        return status($insert);
+        
+        
+        $id= $this->db->lastInsertID();
+        $status = status($insert);
+        if($status["status"] == "success" && !empty($_FILES['file']['name'])){
+            $this->uploadHandler($id);
+        }
+        return $status;
     }
     
     public function edit($news){
@@ -48,17 +59,54 @@ class News_Model extends Model{
         $edit->bindParam(3,$news["Content"]);
         $edit->bindParam(4,$news["ImageSrc"]);
         $edit->bindParam(5,$news["NID"]);
+        
+        $id= $this->db->lastInsertID();
+        $status = status($edit);
+        if($status["status"] == "success" && !empty($_FILES['file']['name'])){
+            $this->uploadHandler($id);
+        }
         $edit->execute();
-        return status($edit);
+        return $status;
     }
     
     public function delete($news){
+        
+        $imageSrc = $this->fetchImageSrc($new["NID"]);
+        
         $delete = $this->db->prepare("Delete from News Where NID = ?");
         $delete->bindParam(1,$news["NID"]);
         $delete->execute();
         
-        // Try to Delete Image associated with it.
-        return status($delete);
+        
+        $status = status($delete);
+        if($status["status"] == "success" && !empty($imageSrc)){
+            unlink($this->docRoot.$imageSrc);
+        }
+        return $status;
+    }
+    
+    private function uploadHandler($id){
+        // MD5 the title
+        $hashedID = md5($_FILES['file']['name']);
+        // Find a unique md5
+        while(file_exists($this->docRoot.$this->root.$hashedID.".jpg")){
+            $hashedID = md5($hashedID);
+        }
+        $hashedID = substr($hashedID, 0, 8);
+        $file = $this->root.$hashedID.".jpg";
+        move_uploaded_file ($_FILES['file']['tmp_name'] , $this->docRoot.$file);
+        $update = $this->db->prepare("Update News Set ImageSrc = ? Where NID  = ?");
+        $update->bindParam(1,$file);
+        $update->bindParam(2,$id);
+        $update->execute();
+    }
+    
+    private function fetchImageSrc($id){
+        $file = $this->db->prepare("Select ImageSrc from News where NID = ?");
+        $file->bindParam(1,$id);
+        $row=$fetchFile->fetch(PDO::FETCH_ASSOC);
+        $fileLocation = $row['ImageSrc'];
+        return $fileLocation;
     }
 }
 

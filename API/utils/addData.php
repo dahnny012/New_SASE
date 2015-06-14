@@ -25,6 +25,7 @@
          $insert->bindParam(3,$news->Content);
          $insert->bindParam(4,$news->ImageSrc);
          $insert->execute();
+         $row = $insert->fetch(PDO::FETCH_ASSOC);
          if(!$insert->rowCount()){
              echo "Insert Failed <br>";
          }
