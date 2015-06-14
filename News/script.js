@@ -29,7 +29,12 @@ var News = React.createClass({
              msg: "delete",
              NID: this.state.news.NID
          }, function(data) {
-             data = JSON.parse(data);
+             try{
+                data = JSON.parse(data);}
+             catch(e){
+                console.log(data);
+                return;
+             }
              if (data.status !== "success") {
                  alert("Delete was not successful");
                  return;
@@ -55,8 +60,8 @@ var News = React.createClass({
                 <input type="text" placeholder="Title" name="Title" className="card-title" defaultValue={this.state.news.Title} onChange={this.queueChange}/>
                 <input type="text" placeholder="Date" name="Date" className="card-title" defaultValue={this.state.news.Date} onChange={this.queueChange}/>
                 <textarea name="" placeholder="Content" name="Content" className="materialize-textarea" defaultValue={this.state.news.Content} onChange={this.queueChange}/>
-                <input type="file"/>
-                <input type="url" placeholder="Url"/>
+                <input type="file" ref="newImage"/>
+                <input type="url" placeholder="Url" defaultValue={this.state.news.ImageSrc} onChange={this.queueChange}/>
             </div>
             <div className="card-action">
             
@@ -72,35 +77,48 @@ var News = React.createClass({
                   // Grab the ID
                   temp.NID = re.state.news.NID;
                   // Send the blob of info
-                  $.post(post, {
+                  
+                  
+                    var form = new FormData();
+                    var file = this.refs.newImage.getDOMNode().files[0];
+                    form.append("file",file);
+                    var data = {
                       msg: "edit",
                       NID: temp.NID,
                       Title:temp.Title,
                       Date:temp.Date,
                       Content:temp.Content,
                       ImageSrc:temp.ImageSrc
-                      
-                  }, function(data) {
-                      data = JSON.parse(data);
-                      if(data.status !== "success"){
-                          alert("Edit was not successful");
-                          return;
-                      }
-                      var newNews = {};
-                      // If successful edit, reflect changes in UI
-                      for(var field in temp){
-                         newNews[field] = temp[field];
-                      }
-                      newNews.NID = re.state.news.NID;
-                      re.setState({
-                          editMode:false,
-                          news:newNews,
-                          changeQueue:{},
-                      });
-                      
-                  }.bind(re));
+                    };
+                    for(var field in data){
+                        console.log(data[field]);
+                        form.append(field,data[field]);
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', post, true);
+                    xhr.onload = function() {
+                        if (this.status == 200) {
+                            var response = JSON.parse(this.response);
+                            if(response.status !== "success"){
+                                alert("Edit was not successful");
+                                return;
+                            }
+                            var newNews = {};
+                             // If successful edit, reflect changes in UI
+                            for(var field in temp){
+                                newNews[field] = temp[field];
+                            }
+                            newNews.ImageSrc = response.data.ImageSrc;
+                            newNews.NID = re.state.news.NID;
+                            re.setState({
+                                editMode:false,
+                                news:newNews,
+                                changeQueue:{},
+                            });
+                        };
+                  }.bind(re);
+                  xhr.send(form);
                }}>Add</button>
-               
                <button onClick={function(){
                    re.setState({
                        editMode:false,
@@ -112,8 +130,8 @@ var News = React.createClass({
         }
         return (<div className="event card blue darken-4">
                   <div className="card-content white-text">
-                     <div className="card-image image-src">
-              <img src={this.state.news.ImageSrc}/>
+                     <div className="card-image">
+              <img className ="image-src" src={this.state.news.ImageSrc}/>
             </div>
                      <span className="card-title">{this.state.news.Title}</span>
                      <p/>
@@ -219,6 +237,8 @@ var NewsForm = React.createClass({
               var data = JSON.parse(this.response);
               if(data.status == "success"){
                   window.location.reload();
+              }else{
+                  alert("Something is wrong with input");
               }
           };
       };
@@ -233,7 +253,7 @@ var NewsForm = React.createClass({
                   <h2 className="header">Add a News/Annoucement</h2>
           </div>
         </div>
-        <form encType="multipart/form-data" id="test" >
+        <form encType="multipart/form-data">
         <div className="row">
       <div className="col s4 offset-s2">
         <label>Title</label>

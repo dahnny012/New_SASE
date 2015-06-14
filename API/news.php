@@ -71,7 +71,7 @@ class News_Model extends Model{
     
     public function delete($news){
         
-        $imageSrc = $this->fetchImageSrc($new["NID"]);
+        $imageSrc = $this->fetchImageSrc($news["NID"]);
         
         $delete = $this->db->prepare("Delete from News Where NID = ?");
         $delete->bindParam(1,$news["NID"]);
@@ -79,7 +79,9 @@ class News_Model extends Model{
         
         
         $status = status($delete);
+        echo "IMAGE SRCE: ".$imageSrc;
         if($status["status"] == "success" && !empty($imageSrc)){
+            echo "\n\n\nUNLINKING\n\n\n\n";
             unlink($this->docRoot.$imageSrc);
         }
         return $status;
@@ -102,9 +104,10 @@ class News_Model extends Model{
     }
     
     private function fetchImageSrc($id){
-        $file = $this->db->prepare("Select ImageSrc from News where NID = ?");
-        $file->bindParam(1,$id);
-        $row=$fetchFile->fetch(PDO::FETCH_ASSOC);
+        $src = $this->db->prepare("Select ImageSrc from News where NID = ?");
+        $src->bindParam(1,$id);
+        $src->execute();
+        $row=$src->fetch(PDO::FETCH_ASSOC);
         $fileLocation = $row['ImageSrc'];
         return $fileLocation;
     }
