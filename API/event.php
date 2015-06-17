@@ -40,7 +40,7 @@ include "mvc.php";
             $insert->bindParam(4,$event["Location"]);
             $insert->bindParam(5,$event["Description"]);
             $insert->bindParam(6,$event["FB"]);
-            $insert->execute();
+            $insert = $insert->execute();
             return status($insert);
         }
         
@@ -53,14 +53,14 @@ include "mvc.php";
             $edit->bindParam(5,$event["Description"]);
             $edit->bindParam(6,$event["FB"]);
             $edit->bindParam(7,$event["EID"]);
-            $edit->execute();
+            $edit = $edit->execute();
             return status($edit,$event);
         }
         
         public function delete($event){
             $delete = $this->db->prepare("Delete from Events Where EID = ?");
             $delete->bindParam(1,$event["EID"]);
-            $delete->execute();
+            $delete = $delete->execute();
             return status($delete);
         }
     }

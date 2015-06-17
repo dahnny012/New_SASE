@@ -5,9 +5,9 @@ New-SASE
 ##ToDo
 News 
     Admin:
-        determining image/url upload
+        determining image/url upload --- done
     API:
-        Recieving a file/url and knowing what to do.
+        Recieving a file/url and knowing what to do. --- Done
 
 Events:
     Admin:

@@ -50,6 +50,62 @@ var News = React.createClass({
             editMode:true
         });
     },
+    
+    handleSubmit:function(){
+       // Copy Over All Non Changed Data
+       var re= this;
+       var temp = this.state.changeQueue;
+      fields.forEach(function(field){
+          if(temp[field] === undefined){
+              temp[field] = re.state.news[field]
+          }
+      });
+      
+      // Grab the ID
+      temp.NID = re.state.news.NID;
+      // Send the blob of info
+      
+      
+        var form = new FormData();
+        console.log(this.refs);
+        var file = this.refs.newImage.getDOMNode().files[0];
+        form.append("file",file);
+        var data = {
+          msg: "edit",
+          NID: temp.NID,
+          Title:temp.Title,
+          Date:temp.Date,
+          Content:temp.Content,
+          ImageSrc:temp.ImageSrc
+        };
+        for(var field in data){
+            form.append(field,data[field]);
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', post, true);
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                var res = JSON.parse(xhr.response);
+                if(res.status !== "success"){
+                    alert("Edit was not successful");
+                    return;
+                }
+                var newNews = {};
+                 // If successful edit, reflect changes in UI
+                for(var field in temp){
+                    newNews[field] = temp[field];
+                }
+                newNews.ImageSrc = res.data.ImageSrc;
+                newNews.NID = re.state.news.NID;
+                re.setState({
+                    editMode:false,
+                    news:newNews,
+                    changeQueue:{},
+                });
+            }
+      }.bind(re);
+      xhr.send(form);
+    },
     render:function(){
         var re = this;
         if(this.state.delete)
@@ -65,60 +121,7 @@ var News = React.createClass({
             </div>
             <div className="card-action">
             
-               <button onClick={function(){
-                   // Copy Over All Non Changed Data
-                   var temp = re.state.changeQueue;
-                  fields.forEach(function(field){
-                      if(temp[field] === undefined){
-                          temp[field] = re.state.news[field]
-                      }
-                  });
-                  
-                  // Grab the ID
-                  temp.NID = re.state.news.NID;
-                  // Send the blob of info
-                  
-                  
-                    var form = new FormData();
-                    var file = this.refs.newImage.getDOMNode().files[0];
-                    form.append("file",file);
-                    var data = {
-                      msg: "edit",
-                      NID: temp.NID,
-                      Title:temp.Title,
-                      Date:temp.Date,
-                      Content:temp.Content,
-                      ImageSrc:temp.ImageSrc
-                    };
-                    for(var field in data){
-                        console.log(data[field]);
-                        form.append(field,data[field]);
-                    }
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', post, true);
-                    xhr.onload = function() {
-                        if (this.status == 200) {
-                            var response = JSON.parse(this.response);
-                            if(response.status !== "success"){
-                                alert("Edit was not successful");
-                                return;
-                            }
-                            var newNews = {};
-                             // If successful edit, reflect changes in UI
-                            for(var field in temp){
-                                newNews[field] = temp[field];
-                            }
-                            newNews.ImageSrc = response.data.ImageSrc;
-                            newNews.NID = re.state.news.NID;
-                            re.setState({
-                                editMode:false,
-                                news:newNews,
-                                changeQueue:{},
-                            });
-                        };
-                  }.bind(re);
-                  xhr.send(form);
-               }}>Add</button>
+               <button onClick={this.handleSubmit}>Add</button>
                <button onClick={function(){
                    re.setState({
                        editMode:false,

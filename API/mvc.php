@@ -93,7 +93,7 @@
     
     function status($query,$data=null){
         $status;
-        if(!$query->rowCount()){
+        if(!$query){
             $status = message("error",$data);
         }else{
             $status = message("success",$data);

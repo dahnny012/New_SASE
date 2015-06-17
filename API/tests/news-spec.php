@@ -74,11 +74,11 @@
     function simpleEditTest(){
         logg("Edit Test:");
         clear();
-        $_POST["msg"] = "insert";
+        $_POST["msg"] = "edit";
         $_POST["Title"] = "InsertTest";
         $_POST["Date"] = "2015-05-25";
-        $_POST["Content"] = "05:06:00";
-        $_POST["ImageSrc"] = "";
+        $_POST["Content"] = "05:06:0005:06:0005:06:0005:06:0005:06:0005:06:00";
+        $_POST["ImageSrc"] = "sadasdsa";
         $_POST["NID"] = 1;
         $controller = new News_Controller() or die("Could not instantiate controller");
         $data = $controller->fetch($_POST);

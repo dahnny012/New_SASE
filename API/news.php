@@ -41,7 +41,7 @@ class News_Model extends Model{
         $insert->bindParam(2,$news["Date"]);
         $insert->bindParam(3,$news["Content"]);
         $insert->bindParam(4,$news["ImageSrc"]);
-        $insert->execute();
+        $insert = $insert->execute();
         
         
         $id= $this->db->lastInsertID();
@@ -53,41 +53,41 @@ class News_Model extends Model{
     }
     
     public function edit($news){
-        $edit = $this->db->prepare("Update News Set Title = ?, Date = ?, Content = ?, ImageSrc = ? WHERE NID = ?");
+        $edit = $this->db->prepare('Update News set Title = ? ,Date = ?,Content =?,ImageSrc=? where NID = ?');
         $edit->bindParam(1,$news["Title"]);
         $edit->bindParam(2,$news["Date"]);
         $edit->bindParam(3,$news["Content"]);
         $edit->bindParam(4,$news["ImageSrc"]);
         $edit->bindParam(5,$news["NID"]);
+
+        $edit = $edit->execute();
         
         $id= $this->db->lastInsertID();
         $status = status($edit);
         if($status["status"] == "success" && !empty($_FILES['file']['name'])){
-            $this->uploadHandler($id);
+            $file = $this->uploadHandler($news["NID"],$news["ImageSrc"]);
+            $news["ImageSrc"] = $file;
         }
-        $edit->execute();
+        $status["data"] = $news;
         return $status;
     }
     
     public function delete($news){
-        
         $imageSrc = $this->fetchImageSrc($news["NID"]);
         
         $delete = $this->db->prepare("Delete from News Where NID = ?");
         $delete->bindParam(1,$news["NID"]);
-        $delete->execute();
+        $delete = $delete->execute();
         
         
         $status = status($delete);
-        echo "IMAGE SRCE: ".$imageSrc;
         if($status["status"] == "success" && !empty($imageSrc)){
-            echo "\n\n\nUNLINKING\n\n\n\n";
-            unlink($this->docRoot.$imageSrc);
+            $this->deleteImage($imageSrc);
         }
         return $status;
     }
     
-    private function uploadHandler($id){
+    private function uploadHandler($id,$oldImage=null){
         // MD5 the title
         $hashedID = md5($_FILES['file']['name']);
         // Find a unique md5
@@ -100,7 +100,10 @@ class News_Model extends Model{
         $update = $this->db->prepare("Update News Set ImageSrc = ? Where NID  = ?");
         $update->bindParam(1,$file);
         $update->bindParam(2,$id);
-        $update->execute();
+        if($update->execute() && $oldImage){
+            $this->deleteImage($oldImage);
+        }
+        return $file;
     }
     
     private function fetchImageSrc($id){
@@ -110,6 +113,11 @@ class News_Model extends Model{
         $row=$src->fetch(PDO::FETCH_ASSOC);
         $fileLocation = $row['ImageSrc'];
         return $fileLocation;
+    }
+    
+    private function deleteImage($image){
+        if(file_exists($this->docRoot.$image))
+            unlink($this->docRoot.$image);
     }
 }
 
