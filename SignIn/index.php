@@ -9,7 +9,7 @@ class Converter{
         return $x500;
     }  
     
-    public static function name($name,$student){
+    public static function name($name,&$student){
         $names = preg_split('/ /',$name);
         if(count($names) < 2){
             return false;
