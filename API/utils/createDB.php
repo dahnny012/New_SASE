@@ -28,4 +28,25 @@
      UNIQUE KEY NID (NID)
     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
+    
+    /*
+    $drop = $db->prepare("DROP TABLE IF EXISTS Members");
+    $drop->execute();
+    $create = $db->prepare("CREATE TABLE IF NOT EXIST SignIn (
+     EID int(8) NOT NULL auto_increment,
+     MID int(8) NOT NULL,
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+    $create->execute();
+    
+    
+    $drop = $db->prepare("DROP TABLE IF EXISTS SignIn");
+    $drop->execute();
+    $create = $db->prepare("CREATE TABLE IF NOT EXIST SignIn (
+     EID int(8) NOT NULL auto_increment,
+     MID int(8) NOT NULL,
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+    $create->execute();
+    */
+    
+    
 ?>
