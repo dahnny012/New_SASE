@@ -34,10 +34,6 @@
             var_dump($this->data);
             return $this->data;
         }
-        
-        public function foo(){
-            echo "GG";
-        }
     }
     
     

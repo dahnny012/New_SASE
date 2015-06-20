@@ -134,6 +134,11 @@
             return $query;
         }
     }
+    
+    class SignIn_Query{
+        
+        
+    }
 ?>
 
 
