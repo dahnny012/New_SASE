@@ -42,6 +42,7 @@ class Scraper {
 
 
 // Main
+/*
 if(isset($_GET["x500"])){
     $student = Scraper::getStudent($_GET["x500"]);
     if(!$student){
@@ -50,7 +51,7 @@ if(isset($_GET["x500"])){
     header('Content-Type: application/json');
     echo json_encode($student);
 }
-
+*/
 function logg($str){
     echo $tr."<br>";
 }

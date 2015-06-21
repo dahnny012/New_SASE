@@ -6,15 +6,19 @@
         }
         
         public function get($data){
+            return status(false);
         }
         
         public function insert($data){
+            return status(false);
         }
         
         public function edit($data){
+            return status(false);
         }
         
         public function delete($data){
+            return status(false);
         }
     }
 

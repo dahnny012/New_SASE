@@ -1,0 +1,235 @@
+
+
+.tableWrap
+{
+margin-left:%40;
+background:#EBEBEB;
+margin-top:30px;
+padding-top:30px;
+padding-bottoM:30px;
+box-shadow: 2px 7px 7px .5px #D4D4D4;
+}
+	.signHeader
+	{	
+
+background:#F9F9F9;
+
+color:#757575;
+font-family: 'Source Sans Pro', sans-serif;
+font-size:24px;
+
+	}
+	
+
+#headerContainer{
+width:100%;
+background:white;
+
+box-shadow: 2px 7px 7px .5px #D4D4D4;
+}
+#header{
+
+width:500px;
+height:194.39px;
+padding-bottom:20px;
+
+}
+	.signInWrap
+	{
+	margin-left:40%;
+	width:153px;
+	/*padding-right:13px; Add 13*/
+	background:white;
+	padding:40px;
+	padding-right:53px;
+	border-bottom:20px #125C8C solid;
+	box-shadow: 2px 7px 7px .5px #D4D4D4;
+	
+	}
+	
+	
+
+
+@media screen and (max-width: 1920px) and (min-width: 1660px){
+	#header
+	{
+	 margin-left:35%;
+	}
+	
+	.signInWrap
+	{
+     margin-left:42%;
+	}
+}
+
+@media screen and (max-width: 1660px) and (min-width: 1440px){
+	#header
+	{
+	 margin-left:35%;
+	}
+	
+	.signInWrap
+	{
+     margin-left:44%;
+	}
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1080px) {
+	#header
+	{
+	 margin-left:30%;
+	}
+	
+	.signInWrap
+	{
+     margin-left:42%;
+	}
+}
+
+@media screen and (max-width: 1080px) and (min-width: 640px) {
+	#header
+	{
+	 margin-left:25%;
+	}
+	
+	.signInWrap
+	{
+     margin-left:40%;
+	}
+}
+
+	/*#activeHeader
+	{
+		padding-left:23px;
+	}*/
+
+	#signInForm
+	{
+	padding-top:10px;
+	}
+
+		#signInFields
+		{
+		height:60px;
+		width:150px;
+		font-size:20px;
+		font-family: 'Source Sans Pro', sans-serif;
+		-webkit-appearance: textfield;
+		background:white;
+		padding:0px;
+		box-shadow: none;
+		border:none;
+		border-radius: 0px;
+		border-bottom:1px solid #488BB5;
+		}
+		
+
+
+		#programs
+		{
+		font-family: 'Arial', sans-serif;
+		background: white;
+		border-style:solid;
+		border-width: 1px;
+		border-color:#125C8C;
+		margin-bottom:10px;
+		}
+		
+		#programs:hover
+		{
+		background: #125C8C;
+		color: white;
+		}
+
+
+
+		#signInButton
+		{
+		font-family: 'Source Sans Pro', sans-serif;
+		margin-top:20px;
+		margin-left:22px;
+		width: 120px;
+		height:40px;
+		font-size:18px;
+		line-height: 19px;
+		color:black;
+		background:#125C8C;
+		border-style:solid;
+		border-width: 1px;
+		border-color:black;
+		color:white;
+		}
+
+	.userSignInWrap
+	{
+	padding-left:20px;
+
+	float:left;
+	}
+		.userBorder
+		{
+		padding-left:20px;
+		border-left-style: solid;
+		border-left-width: 2px;
+		border-color:#488BB5;
+		padding-bottom:180px;
+		padding-top:0px;
+		}
+
+		
+		
+		
+		
+		
+		
+		
+	.gearWrapper{
+	display:none;
+	
+	}
+	.gearFiles{
+		display: none;
+		position:absolute;
+		top:30%;
+		left:32%;
+	}
+	.gameText{
+		display:none;
+		position:absolute;
+		top:75%;
+		left:36%;
+		font-size:32px;
+		color: #F1F1F1;
+		font-family: 'Arial', sans-serif;
+		background: #353535;
+		padding:10px;
+	}
+	
+	
+	#lose{
+
+		position:absolute;
+		top:75%;
+		left:40%;
+		font-size:32px;
+		color: #F1F1F1;
+		font-family: 'Arial', sans-serif;
+		background: #353535;
+		padding:10px;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
