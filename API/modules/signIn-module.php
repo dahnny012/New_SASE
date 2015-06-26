@@ -1,5 +1,5 @@
 <?php     
-    include "mvc.php";
+    include_once "mvc.php";
     
     class SignIn_Model extends Model{
         private $db;
