@@ -1,8 +1,5 @@
 <?php 
-
   $msg = "Please enter your x500";
-  
-  
 ?>
 <html>
 

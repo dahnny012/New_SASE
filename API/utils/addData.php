@@ -1,6 +1,6 @@
 <?php 
     include_once "../connection.php";
-    $json = file_get_contents("../events.json");
+    $json = file_get_contents("../test-data/events.json");
     $data = json_decode($json)->events;
     foreach($data as $event){
          $insert = $db->prepare("INSERT INTO Events (Name,Date,Time,Location,Description,FB) VALUES (?,?,?,?,?,?)");
@@ -16,7 +16,7 @@
          }
     }
     
-    $json = file_get_contents("../news.json");
+    $json = file_get_contents("../test-data/news.json");
     $data = json_decode($json)->news;
     foreach($data as $news){
          $insert = $db->prepare("INSERT INTO News (Title,Date,Content,ImageSrc) VALUES (?,?,?,?)");
