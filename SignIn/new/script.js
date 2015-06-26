@@ -70,7 +70,7 @@ function signInBox() {
     var start = 0;
     var forms = $(".content-forms");
     var message = messageBox();
-
+    var member = {};
     return {
         init: function() {
             toggle();
@@ -80,17 +80,24 @@ function signInBox() {
             switch (start) {
                 case 0:
                     scrapeUMN().then(function(){
-                        message.set("Complete the information") 
+                        message.set("Complete the information");
                     });
                     break;
                 case 1:
                     sendForm().then(function(){
-                        message.set("Would you be interested in any programs?")
+                        message.set("Would you be interested in any programs?");
                     });
- 
-                    break;
-                case 2:
-                    navHome();       
+                
+                    $(".signIn-form").off("submit").on("submit",function(e){
+                        e.preventDefault();
+                    });
+                    $("#done").on("click",function(){
+                        navHome();
+                    });
+                    $("#freespin").on("click",function(){
+                        freespin();
+                    });
+                    
             }
 
         }
@@ -115,19 +122,42 @@ function signInBox() {
     }
     
     function sendForm(){
-        // Collect data.
-        // send form
+        var data = signInData($(forms[start]));
+        member.name = data.Name;
+        member.email = data.Email;
+        data.msg = "insert";
+        return $.post("/API/signIn.php",data,function(msg){
+            console.log(msg);
+            toggle();
+            start++;
+            toggle();
+        })
     }
     
     function navHome(){
-        window.location = "/SignIn/new";
+        // Get programs
+        var data = signInData($(forms[start],"input[type='hidden']"));
+        data.name = member.name;
+        data.email = member.email;
+        data.msg = "programs";
+        $.post("/API/signIn.php",data,function(msg){
+            console.log(msg);
+            window.location = "/SignIn/new/"
+        });
+        
+    }
+    
+    function freespin(){
+        
     }
 }
 
 
-function signInData(current){
+function signInData(current,query){
     var data = {};
-    var inputs = current.find("input");
+    if(query == undefined)
+        query = "input";
+    var inputs = current.find(query);
     
     inputs.each(function(i,v){
         data[v.name] = v.value;

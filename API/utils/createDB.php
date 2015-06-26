@@ -13,7 +13,7 @@
      FB varchar(100) NOT NULL,
      PRIMARY KEY (EID),
      UNIQUE KEY EID (EID)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+    ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
     
     $drop = $db->prepare("DROP TABLE IF EXISTS News");
@@ -26,21 +26,19 @@
      ImageSrc varchar(255),
      PRIMARY KEY (NID),
      UNIQUE KEY NID (NID)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+    ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
     
     
     $drop = $db->prepare("DROP TABLE IF EXISTS Members");
     $drop->execute();
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS Members (
-     First varchar(32),
-     Last varchar(32),
      Name varchar(32),
      x500 varchar(64) NOT NULL,
      Email varchar(64),
      PRIMARY KEY (x500),
      UNIQUE KEY x500 (x500)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1");
+    ) ENGINE=INNODB DEFAULT CHARSET=latin1");
     $create->execute();
     
     
@@ -52,6 +50,6 @@
      PRIMARY KEY (EID,x500),
      FOREIGN KEY (EID) REFERENCES Events(EID),
      FOREIGN KEY (x500) REFERENCES Members(x500)
-    ) ENGINE=MyISAM DEFAULT CHARSET=latin1");
+    ) ENGINE=INNODB DEFAULT CHARSET=latin1");
     $create->execute();
 ?>

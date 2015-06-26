@@ -1,6 +1,5 @@
 <?php 
     include "mvc.php";
-    include "signIn.php";
     
     class SignIn_Model extends Model{
         public function __construct(){
@@ -19,32 +18,40 @@
             return status($status);
         }
         
-        private function makeMember($post){
-            if(!$this->get($post)){
-                // Doesnt exist query UMN
-                $student = Scraper::getStudent($post["x500"]);
-                // Insert into Members
-                $insert;
-                if($student){
-                    $insert = $this->db->prepare("Insert into Members (First,Last,Name,Email,x500) Values (?,?,?,?,?)");
-                    $insert->bindParam(1,$student["First"]);
-                    $insert->bindParam(2,$student["Last"]);
-                    $insert->bindParam(3,$student["Name"]);
-                    $insert->bindParam(4,$student["Email"]);
-                    $insert->bindParam(5,$student["x500"]);
-                }else{
-                    $insert = $this->db->prepare("Insert into Members (x500) Values (?)");
-                    $insert->bindParam(1,$post["x500"]);
+        public function insertPrograms($post){
+            $logs = [];
+            $logs["tech"] = fopen("../SignIn/tech.txt","a");
+            $logs["volunteer"] = fopen("../SignIn/volunteer.txt","a");
+            $logs["mentor"] = fopen("../SignIn/mentor.txt","a");
+            
+            foreach($post as $key => $value){
+                if($value){
+                    if(isset($logs[$key])){
+                        fwrite($logs[$key],$post["name"]." : ".$post["email"]."\n");
+                        fclose($logs[$key]);
+                    }
                 }
-                $insert->execute();
             }
         }
         
-        private function get($student){
-            $get = $this->prepare("Select from Members where x500 = ?");
+        private function makeMember($student){
+            if(!$this->getMember($student)){
+                if($student){
+                    $insert = $this->db->prepare("Insert into Members (Name,Email,x500) Values (?,?,?)");
+                    $insert->bindParam(1,$student["Name"]);
+                    $insert->bindParam(2,$student["Email"]);
+                    $insert->bindParam(3,$student["x500"]);
+                    $insert->execute();
+                }
+            }
+        }
+        
+        private function getMember($student){
+            $get = $this->db->prepare("Select * from Members where x500 = ?");
             $get->bindParam(1,$student["x500"]);
-            if(!$get->execute())
+            if(!$get->execute() && !$get->rowCount()){
                 return false;
+            }
             $row = $get->fetch(PDO::FETCH_ASSOC);
             return $row;
         }
@@ -60,8 +67,9 @@
     
     class SignIn_Controller extends Controller{
         public $log;
+        public $model;
         public function __construct(){
-            parent::__construct(new SignIn_Model());
+            $this->model = new SignIn_Model();
         }
         
         public function run(){
@@ -77,6 +85,23 @@
             }else{
                 $view = new SignIn_View(message("error"));
                 $view->render();
+            }
+        }
+        
+        public function fetch($data=["msg"=>""]){
+            if(empty($data["msg"])){
+                return message("error");
+            }
+            if($data["msg"] == "query"){
+                return message("error");
+            }
+            switch($data["msg"]){
+                case "insert":
+                    return $this->model->insert($data);
+                case "programs":
+                    return $this->model->insertPrograms($data);
+                default:
+                    return message("error",$data);
             }
         }
     }
