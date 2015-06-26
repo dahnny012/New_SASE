@@ -20,9 +20,9 @@
         
         public function insertPrograms($post){
             $logs = [];
-            $logs["tech"] = fopen("../SignIn/tech.txt","a");
-            $logs["volunteer"] = fopen("../SignIn/volunteer.txt","a");
-            $logs["mentor"] = fopen("../SignIn/mentor.txt","a");
+            $logs["tech"] = fopen("..SignIn/logs/tech.txt","a");
+            $logs["volunteer"] = fopen("../SignIn/logs/volunteer.txt","a");
+            $logs["mentor"] = fopen("../SignIn/logs/mentor.txt","a");
             
             foreach($post as $key => $value){
                 if($value){

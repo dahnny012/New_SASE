@@ -27,6 +27,7 @@ class Scraper {
         $contents = file_get_html($url);
         $student = array();
         $student["name"] = $contents->find("h2")[0]->plaintext;
+        $student["email"] = null;
         if(!Converter::name($student["name"],$student)){
             return $student;
         }

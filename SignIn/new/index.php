@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <div class="header-wrap">
-    <img id="header" src="/Assets/Website/SaseUoM.png">
+    <a href="" ><img id="header" src="/Assets/Website/SaseUoM.png"></a>
 </div>
 
 <body>
