@@ -128,3 +128,40 @@ body{
     display:none;
 }
 		
+		
+		
+	.gearWrapper{
+	display:none;
+	
+	}
+	.gearFiles{
+		display: none;
+		position:absolute;
+		top:30%;
+		left:32%;
+	}
+	.gameText{
+		display:none;
+		position:absolute;
+		top:75%;
+		left:36%;
+		font-size:32px;
+		color: #F1F1F1;
+		font-family: 'Arial', sans-serif;
+		background: #353535;
+		padding:10px;
+	}
+	
+	
+	#lose{
+
+		position:absolute;
+		top:75%;
+		left:40%;
+		font-size:32px;
+		color: #F1F1F1;
+		font-family: 'Arial', sans-serif;
+		background: #353535;
+		padding:10px;
+	}
+	

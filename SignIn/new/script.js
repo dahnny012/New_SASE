@@ -46,6 +46,9 @@ $(window).load(function(){
         e.preventDefault();
         signIn.next();
     });
+    
+    
+    
 });
 
 
@@ -90,9 +93,6 @@ function signInBox() {
                     });
                     $("#done").on("click",function(){
                         navHome();
-                    });
-                    $("#freespin").on("click",function(){
-                        freespin();
                     });
                     
             }
@@ -167,5 +167,54 @@ function merge(src,dest){
     for(var prop in src){
         dest[prop] = src[prop];
     }
+}
+
+
+$(document).one("click","#rand",
+	function(){
+		
+		$(".gearWrapper").toggle();
+		var start = 0;
+		var end =$($(".gearFiles")).length;
+		var stop = setInterval(function(){
+		console.log(start);
+		if(start == 0){
+		$($(".gearFiles")[0]).toggle();
+		start++;
+		}
+		else if(start == 46)
+		{
+			randomDraw();
+			$($(".gearFiles")[start-1]).toggle();
+			$($(".gearFiles")[start]).toggle();
+			clearInterval(stop);
+			$(document).on("click",".gearWrapper",
+				function(){
+					$(this).hide();
+					$(".gameText").hide();
+				}
+			);
+		}
+		else{
+		$($(".gearFiles")[start-1]).toggle();
+		$($(".gearFiles")[start]).toggle();
+		start++;
+		}
+			}, 60);
+	}
+);
+
+
+
+function randomDraw()
+{
+	var rando = Math.floor(Math.random() * 100) + 1;
+	console.log("random draw " + rando);
+	if(rando > 70){
+		$("#win").show();
+	}
+	else{
+		$("#lose").show();
+	}
 }
 

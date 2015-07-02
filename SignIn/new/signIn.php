@@ -24,6 +24,68 @@ if(empty($_SESSION["EID"])){
 </div>
 
 <body>
+    <div class="gearWrapper">
+        <img class="gearFiles" src="/Assets/SignIn/gear01.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear02.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear05.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear12.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear14.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear17.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear18.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear19.png"> </img>
+        <img class="gearFiles" src="/Assets/SignIn/gear20.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear21.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear22.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear23.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear24.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear25.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear26.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear27.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear28.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear29.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear30.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear31.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear32.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear33.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear34.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear35.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear36.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear37.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear38.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear39.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear41.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear45.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear46.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear49.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear50.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear51.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear52.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear53.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear54.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear55.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear56.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear57.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear58.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear59.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear60.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear61.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear62.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear63.png"></img>
+        <img class="gearFiles" src="/Assets/SignIn/gear64.png"></img>
+        </img>
+    </div>
+
+
+    <div id="win" class="gameText">
+        Congratulations you are a winner!
+    </div>
+    <div id="lose" class="gameText">
+        Sorry you did not win.
+    </div>
+    <div id="randWrapper">
+
+
+    </div>
     <div id="content">
         <div class="row">
             <div class="signIn-wrap">
@@ -53,7 +115,7 @@ if(empty($_SESSION["EID"])){
                             <input id="mentor" name="mentor" type="hidden" value=0></input>
                             <input id="volunteer" name="volunteer" type="hidden" value=0></input>
                             <button id="done" class="signIn-button">Done</button>
-                            <button id="freespin" class="signIn-button" id=>Free Spin</button>
+                            <button id="rand" class="signIn-button" id=>Free Spin</button>
                         </div>
                     </div>
                     
