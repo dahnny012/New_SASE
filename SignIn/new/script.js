@@ -26,7 +26,6 @@ $(document).on("click", ".signIn-programs", function() {
             break;
 
     }
-
     if (val == 0) {
         $(this).css({
             "background": "#125C8C",
@@ -40,9 +39,7 @@ $(document).on("click", ".signIn-programs", function() {
         });
     }
 });
-
-// Event Loop
-$(document).ready(function() {
+$(window).load(function(){
     var signIn = signInBox();
     signIn.init();
     $(".signIn-form").submit(function(e) {

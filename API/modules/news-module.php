@@ -1,8 +1,13 @@
 <?php 
 ini_set('display_errors','1'); error_reporting(E_ALL);
-include_once "time.php";
-include_once "queries.php";
-include_once "mvc.php";
+if(!defined("ROOT")){
+    define("ROOT",$_SERVER['DOCUMENT_ROOT']);
+}
+include_once ROOT."/API/mvc.php";
+include_once ROOT."/API/time.php";
+include_once ROOT"/API/queries.php";
+
+
 
 class News_View extends View{
     public function __construct($data){
@@ -19,7 +24,6 @@ class News_Model extends Model{
         include "connection.php";
         $this->db = $db;
         $this->root = "/Assets/News/";
-        $this->docRoot = "/home/ubuntu/workspace";
     }
     
     public function get($data){
@@ -91,12 +95,12 @@ class News_Model extends Model{
         // MD5 the title
         $hashedID = md5($_FILES['file']['name']);
         // Find a unique md5
-        while(file_exists($this->docRoot.$this->root.$hashedID.".jpg")){
+        while(file_exists(ROOT.$this->root.$hashedID.".jpg")){
             $hashedID = md5($hashedID);
         }
         $hashedID = substr($hashedID, 0, 8);
         $file = $this->root.$hashedID.".jpg";
-        move_uploaded_file ($_FILES['file']['tmp_name'] , $this->docRoot.$file);
+        move_uploaded_file ($_FILES['file']['tmp_name'] , ROOT.$file);
         $update = $this->db->prepare("Update News Set ImageSrc = ? Where NID  = ?");
         $update->bindParam(1,$file);
         $update->bindParam(2,$id);
@@ -116,8 +120,8 @@ class News_Model extends Model{
     }
     
     private function deleteImage($image){
-        if(file_exists($this->docRoot.$image))
-            unlink($this->docRoot.$image);
+        if(file_exists(ROOT.$image))
+            unlink(ROOT.$image);
     }
 }
 

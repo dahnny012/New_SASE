@@ -1,8 +1,12 @@
 <?php 
 ini_set('display_errors','1'); error_reporting(E_ALL);
-include_once "time.php";
-include_once "queries.php";
-include_once "mvc.php";
+if(!defined("ROOT")){
+    define("ROOT",$_SERVER['DOCUMENT_ROOT']);
+}
+include_once ROOT."/API/mvc.php";
+include_once ROOT."/API/time.php";
+include_once ROOT."/API/queries.php";
+
 
     class Event_View extends View{
         public function __construct($data){
@@ -13,7 +17,7 @@ include_once "mvc.php";
     class Event_Model extends Model{
         public $db;
         public function __construct(){
-            include "../connection.php";
+            include ROOT."/API/connection.php";
             $this->db = $db;
         }
         
@@ -30,6 +34,8 @@ include_once "mvc.php";
                 $rows[] = $row;
             }
             return $rows;
+            
+            
         }
         
         public function insert($event){

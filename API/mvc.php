@@ -20,10 +20,6 @@
         public function delete($data){
             return status(false);
         }
-        
-        public function docRoot(){
-            return "/home/ubuntu/workspace";
-        }
     }
 
 

@@ -20,5 +20,13 @@
       "Time": "14:30:00",
       "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
       "FB": "https://www.facebook.com/events/698543220251890/"
+    },
+    {
+      "Name": "Event",
+      "Date": "2015-06-19",
+      "Location": "Behind Coffman",
+      "Time": "14:30:00",
+      "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a tincidunt purus. Suspendisse non dictum metus. Suspendisse vitae massa metus. Vivamus accumsan tristique nisl in rutrum. Donec sed nibh quis tortor accumsan feugiat. Nam in erat ac mauris posuere elementum. Pellentesque aliquet dictum maximus. Vivamus semper lectus magna. Duis ornare.",
+      "FB": "https://www.facebook.com/events/698543220251890/"
     }]
 }
