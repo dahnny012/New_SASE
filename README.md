@@ -26,8 +26,8 @@ General API
         - Never know when i might need to recover
         
 General Clean Up
-    - Refactor Member sign ins
-        - Provide admin for information and shit
-        - Refactor how the DB stores the event
-        - Draw from available events when creating a signIn page
+    - Refactor Member sign ins ---------------
+        - Provide admin for information and shit --- On hold
+        - Refactor how the DB stores the event ------------------ Done
+        - Draw from available events when creating a signIn page -------- DOne
     
