@@ -13,7 +13,7 @@ class Time{
     }
     public function toTime($model=false){
         if($model)
-            return $this->timeDataToModel();
+            return $this->timeModelToData();
         return $this->data;
     }
     

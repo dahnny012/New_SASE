@@ -8,7 +8,7 @@
 
 nav ul a,
 nav .brand-logo {
-  color: #444;
+  color: white;
 }
 
 p {
@@ -57,4 +57,29 @@ footer.page-footer {
 
 #program-dropdown{
   width:200px;
+}
+
+
+@media (max-width: 600px) {
+  .desktop{
+    display:none;
+    
+  }
+}
+
+@media (min-width: 600px) {
+  .mobile{
+    
+    display:none;
+  }
+}
+
+.sase-blue{
+  background:#006DB5 !important;
+}
+
+.row .col.s1-5{
+      width: 14.25%;
+    margin-left: 0;
+  
 }

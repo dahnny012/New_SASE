@@ -5,7 +5,7 @@ if(!defined("ROOT")){
 }
 include_once ROOT."/API/mvc.php";
 include_once ROOT."/API/time.php";
-include_once ROOT"/API/queries.php";
+include_once ROOT."/API/queries.php";
 
 
 
@@ -21,7 +21,7 @@ class News_Model extends Model{
     private $root;
     private $docRoot;
     public function __construct(){
-        include "connection.php";
+        include ROOT."/API/connection.php";
         $this->db = $db;
         $this->root = "/Assets/News/";
     }
