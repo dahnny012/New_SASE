@@ -2,37 +2,75 @@
 include("../API/modules/event-module.php");
 include("../API/modules/news-module.php");
 
+$currentDate = date("Y-d-m");
 $currentMonth = date("F");
 $currentMonthNumber = date("n");
 $eventsModel = new Event_Model();
 $newsModel = new News_Model();
-$params = ["byMonth"=>
-          $currentMonthNumber]; 
+$params = ["byDate"=>
+          $currentDate,"timeframe"=>"future"]; 
           
 // Make API calls to get Events and News active this month
 $events = $eventsModel->get($params);
 $news = $newsModel->get($params);
 
 
-
-
-function eventBox($event){
+function eventBox($event,$hideDescription=false){
   
 // Convert the time
 $time = new Time($event["Time"]);
 $event["Time"] = $time->toTime(true);
+
+// Strip year
+
+$event["Date"] = date("F N",strtotime($event["Date"]));
+
 ?>
-<div class="col s12">
-  <div class="card sase-blue">
+<div class="col sl2 offset-l3 m12 l6">
+  <div class="card">
     <div class="card-content white-text">
-      <span class="card-title"><?php echo $event["Name"]; ?></span>
-      <div><?php echo $event["Date"]." ".$event["Time"]." ".$event["Location"]; ?></div>
-      <p><?php echo $event["Description"] ?></p>
+      <div class="card-title sase-blue center-align" style="padding-left:10px"><?php echo $event["Name"]; ?></div>
+      <div class="sase-blue-text">
+         <i class="material-icons sase-icon">today</i>
+        <?php echo $event["Date"]?>
+        <i class="material-icons sase-icon">schedule</i>
+        <?php echo $event["Time"]; ?></div>
+      <div class="sase-blue-text">
+        <i class="material-icons sase-icon">location_on</i>
+        <?php echo $event["Location"]; ?></div>
+      <p class="sase-blue-text">
+        <i class="material-icons sase-icon">info</i>
+        <?php echo $event["Description"]; ?></p>
     </div>
     <div class="card-action">
-      <a href="<?php echo $event["FB"]; ?>"><img src="assets/fb.png"></a>
+      <a class="sase-blue-text" href="<?php echo $event["FB"]; ?>"><img src="assets/fb-colored.png"></a>
     </div>
   </div>
+</div>
+<?php
+}
+
+
+
+
+function newsBox($news){
+// Strip year
+$event["Date"] = date("F N",strtotime($news["Date"]));
+
+?>
+<div class="col sl2 offset-l3 m12 l6">
+  <div class="card">
+    <div class="card-content white-text">
+      <div class="card-title sase-blue center-align" style="padding-left:10px"><?php echo $news["Title"]; ?></div>
+      <div class="sase-blue-text">
+         <i class="material-icons sase-icon">today</i>
+        <?php echo $news["Date"]?>
+      <p class="sase-blue-text">
+        <i class="material-icons sase-icon">info</i>
+        <?php echo $news["Content"]; ?></p>
+    </div>
+  </div>
+</div>
 </div>
 <?php
 }
@@ -44,7 +82,7 @@ $event["Time"] = $time->toTime(true);
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-  <title>Parallax Template - Materialize</title>
+  <title>SASE UMN</title>
 
   <!-- CSS  -->
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -53,11 +91,14 @@ $event["Time"] = $time->toTime(true);
 </head>
 
 <body>
+  <div class="navbar-fixed">
   <nav class="sase-blue" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">SASE UMN</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Home</a></li>
+        <li><a href="#events" style="color:white">Events</a></li>
+        <li><a href="#news" style="color:white">News</a></li>
         <li><a href="#">About Us</a></li>
         <li><a id="program-dropdown" href='#' class='dropdown-button' data-activates='Programs'>Programs</a>
       </ul>
@@ -69,12 +110,19 @@ $event["Time"] = $time->toTime(true);
         <li><a href="#!" style="color:white">Pilots in Progress</a></li>
       </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
+      <ul id="nav-mobile" class="side-nav sase-blue">
+        <li><a href="#">Home</a></li>
+        <li><a href="#events" style="color:white">Events</a></li>
+        <li><a href="#news" style="color:white">News</a></li>
+        <li class="divider "></li>
+        <li><a href="#!" style="color:white">Volunteering</a></li>
+        <li><a href="#!" style="color:white">Tech Commitee</a></li>
+        <li><a href="#!" style="color:white">Pilots in Progress</a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+      <a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="mdi-navigation-menu"></i></a>
     </div>
   </nav>
+  </div>
 
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
@@ -99,16 +147,21 @@ $event["Time"] = $time->toTime(true);
   </div>
 
 
-  <div class="container">
+  <div class="container" id="events">
     <div class="section">
       <div class="row">
         <div class="col s12">
           <div class="icon-block">
             <h2 class="center brown-text"><img src="assets/events.png"></h2>
-            <h5 class="center">Upcoming Events</h5>
-            <h5><?php
-            // Prints the current month;
-            echo $currentMonth;
+            <h5 class="center">Upcoming Event</h5>
+            <div class="row">
+              <?php 
+              if(count($events) > 0)
+                eventBox($events[0]);
+              ?>
+            </div>
+            <h5 class="center">Later This Month</h5>
+            <h5 class="center"><?php
             ?></h5>
             <div class="row">
               <?php   
@@ -135,7 +188,7 @@ $event["Time"] = $time->toTime(true);
     <div class="parallax"><img src="assets/Board_Picture.jpg" alt="Unsplashed background img 2"></div>
   </div>
 
-  <div class="container">
+  <div class="container" id="news">
     <div class="section">
 
        <div class="row">
@@ -145,15 +198,11 @@ $event["Time"] = $time->toTime(true);
             <h5 class="center">News Annoucements</h5>
 
             <div class="row">
-              <div class="col s12">
-                <div class="card sase-blue">
-                  <div class="card-content white-text">
-                    <span class="card-title">News Title</span>
-                    <div>Date Written</div>
-                    <p>News Content</p>
-                  </div>
-                </div>
-              </div>
+              <?php   
+                foreach($news as $new){
+                  newsBox($new);
+                }
+              ?>
             </div>
 
           </div>
@@ -173,6 +222,8 @@ $event["Time"] = $time->toTime(true);
     </div>
     <div class="parallax"><img src="assets/sase.jpg" alt="Unsplashed background img 3"></div>
   </div>
+
+  
 
   <footer class="page-footer sase-blue">
     <div class="container">

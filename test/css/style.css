@@ -78,8 +78,17 @@ footer.page-footer {
   background:#006DB5 !important;
 }
 
+.sase-blue-text{
+  color:#006DB5 !important;
+}
+
+
 .row .col.s1-5{
       width: 14.25%;
     margin-left: 0;
   
+}
+
+.sase-icon{
+  vertical-align: middle; 
 }
