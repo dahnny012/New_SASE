@@ -22,10 +22,13 @@
                 $and = true;
                 $mod = true;
             }
-            else if(isset($get["byDate"])){
+            if(isset($get["byDate"])){
                 $date = $get["byDate"];
                 if(!isset($get["timeframe"])){
                     $get["timeframe"] = "default";
+                }
+                if($and){
+                    $base .= " AND ";
                 }
                 switch($get["timeframe"]){
                     case "past":
@@ -98,10 +101,14 @@
                 $base .= "Year(Date) = $year";
                 $mod = true;
             }
-            else if(isset($get["byDate"]) && !$lol){
+            if(isset($get["byDate"])){
                 $date = $get["byDate"];
                 if(!isset($get["timeframe"])){
                     $get["timeframe"] = "default";
+                }
+                
+                if($and){
+                    $base .= " AND ";
                 }
                 switch($get["timeframe"]){
                     case "past":
@@ -118,7 +125,7 @@
                 $mod = true;
             }
             if(!$mod){
-                $base ="Select * from News ORDER BY NID DESC";
+                $base ="Select * from News ORDER BY Date DESC";
             }
             $this->query = $base;
         }

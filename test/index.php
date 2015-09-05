@@ -7,13 +7,55 @@ $currentMonth = date("F");
 $currentMonthNumber = date("n");
 $eventsModel = new Event_Model();
 $newsModel = new News_Model();
-$params = ["byDate"=>
-          $currentDate,"timeframe"=>"future"]; 
+$params = ["byDate"=>$currentDate,
+          "timeframe"=>"future",
+          "byMonth"=>$currentMonthNumber
+          ];
+$eventParams = ["byDate"=>$currentDate,
+          "timeframe"=>"future",
+          "byMonth"=>$currentMonthNumber
+          ];
+$newsParams = ["byDate"=>$currentDate,
+          "timeframe"=>"past",
+          "byMonth"=>$currentMonthNumber
+          ];
           
 // Make API calls to get Events and News active this month
-$events = $eventsModel->get($params);
-$news = $newsModel->get($params);
+$events = $eventsModel->get($eventParams);
+$news = $newsModel->get($newsParams);
 
+
+
+
+function weekTable($events){
+  function getWeek($date){
+    $getDate = function($format,$str){
+      return date($format,strtotime($str));
+    };
+    // First check if its a sunday then + 1
+    $weekNum = $getDate("W",$date);
+    
+    if($getDate("w",$date) == "0"){
+      $weekNum++;
+    }
+    return $weekNum;
+  }
+  
+  $current = 0;
+  $table = array();
+  $i = -1;
+  foreach($events as $event){
+    $weekNum= getWeek($event["Date"]);
+    if($weekNum > $current){
+      array_push($table,array($event));
+      $i++;
+      $current = $weekNum;
+    }else{
+      array_push($table[$i],$event);
+    }
+  }
+  return $table;
+}
 
 function eventBox($event,$hideDescription=false){
   
@@ -22,8 +64,7 @@ $time = new Time($event["Time"]);
 $event["Time"] = $time->toTime(true);
 
 // Strip year
-
-$event["Date"] = date("F N",strtotime($event["Date"]));
+$event["Date"] = date("l, F j",strtotime($event["Date"]));
 
 ?>
 <div class="col sl2 offset-l3 m12 l6">
@@ -49,9 +90,6 @@ $event["Date"] = date("F N",strtotime($event["Date"]));
 </div>
 <?php
 }
-
-
-
 
 function newsBox($news){
 // Strip year
@@ -158,18 +196,49 @@ $event["Date"] = date("F N",strtotime($news["Date"]));
               <?php 
               if(count($events) > 0)
                 eventBox($events[0]);
+                unset($events[0]);
               ?>
             </div>
             <h5 class="center">Later This Month</h5>
             <h5 class="center"><?php
             ?></h5>
             <div class="row">
-              <?php   
-                foreach($events as $event){
+              <div class="col s12">
+                <ul class="tabs">
+                  <!-- Tab headers !-->
+                  <?php
+                  $weekTable= weekTable($events);
+                  $numTabs = count($weekTable);
+                  $currentTab = 0;
+                  function tab($numTabs){
+                    $tabText = "";
+                    if($numTabs == 0){
+                      $tabText= "Soon";
+                    }else{
+                      $tabText = "Next";
+                    }
+                    $id = "tab-id-".$numTabs;
+                    echo "<li class='col s3 white tab flow-text truncate'><a class='sase-blue-text' href=#$id>$tabText</a></li>";
+                  }
+                  for($currentTab = 0; $currentTab < $numTabs; $currentTab++){
+                    tab($currentTab);
+                  }
+                  ?>
+                </ul>
+              </div>
+              <!-- Data -->
+              <?php 
+              $numTabs = count($weekTable);
+              for($currentTab = 0; $currentTab < $numTabs; $currentTab++){
+                 $id = "tab-id-".$currentTab;
+                 echo "<div id=$id>";
+                 // Tabbed Content
+                foreach($weekTable[$currentTab] as $event){
                   eventBox($event);
                 }
+                echo "</div>";
+              }
               ?>
-            </div>
           </div>
         </div>
       </div>
