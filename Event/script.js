@@ -1,6 +1,5 @@
-moment().format();
 var query = "https://new-sase-dahnny012.c9.io/API/event.php?msg=query";
-var post = "https://new-sase-dahnny012.c9.io/API/event.php";
+var post = "../API/event.php";
 var fields = ["Name","Date","Location","Time","Description","FB"];
 
 
@@ -147,14 +146,6 @@ var EventList = React.createClass({
     componentDidMount: function() {
         $.get(this.props.source,{msg:"query"},function(data){
             data = JSON.parse(data);
-            /*
-            for(var i=3; i<100; i++){
-                var gg = $.extend(true, {}, data[0]);
-                gg.EID = i;
-                gg.Name = i;
-                data.push(gg);
-            }
-            */
             this.setState({
                 events:data
             });

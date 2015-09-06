@@ -1,5 +1,4 @@
 <?php 
-
     class Model{
         
         public function __construct(){
@@ -69,10 +68,9 @@
             if($data["msg"] == "query"){
                 return $this->model->get($data);   
             }
-            if(!$this->authenticate($data)){
-                return message("error");
+            if(!$this->authenticate()){
+                return message("error","Not Authenticated");
             }
-            //formatDate($data);
             switch($data["msg"]){
                 case "edit":
                     return $this->model->edit($data);
@@ -85,10 +83,11 @@
                     return message("error",$data);
             }
         }
-        public function authenticate($data){
-            return true;
-            // blah blah 
+        public function authenticate(){
+            session_start();
+            return isset($_SESSION["admin"]);
         }
+        
     }
     
     function status($query,$data=null){

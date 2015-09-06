@@ -60,14 +60,21 @@ footer.page-footer {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .desktop{
     display:none;
     
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
+  .tablet{
+    
+    display:none;
+  }
+}
+
+@media (min-width: 400px) {
   .mobile{
     
     display:none;

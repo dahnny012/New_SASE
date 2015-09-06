@@ -1,3 +1,10 @@
+<?php
+if(!include "../API/admin.php"){
+   return;
+};
+
+?>
+
 <html>
    <head>
       <title>Submitting an News/Annoucement</title>

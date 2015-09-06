@@ -181,6 +181,7 @@ $event["Date"] = date("F N",strtotime($news["Date"]));
       </div>
     </div>
     <div class="parallax desktop"><img src="assets/words-cropped2.png" alt="Unsplashed background img 2"></div>
+    <div class="parallax tablet"><img src="assets/words-cropped-small4.png" alt="Unsplashed background img 2"></div>
     <div class="parallax mobile"><img src="assets/words-cropped-small.png" alt="Unsplashed background img 2"></div>
   </div>
 
@@ -245,6 +246,7 @@ $event["Date"] = date("F N",strtotime($news["Date"]));
 
     </div>
   </div>
+  </div>
 
 
   <div class="parallax-container valign-wrapper">
@@ -254,7 +256,8 @@ $event["Date"] = date("F N",strtotime($news["Date"]));
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="assets/Board_Picture.jpg" alt="Unsplashed background img 2"></div>
+    <div class="parallax desktop"><img src="assets/Board_Picture.jpg" alt="Unsplashed background img 2"></div>
+    <div class="parallax mobile"><img src="assets/Board_Picture-med.jpg" alt="Unsplashed background img 2"></div>
   </div>
 
   <div class="container" id="news">
@@ -289,7 +292,8 @@ $event["Date"] = date("F N",strtotime($news["Date"]));
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="assets/sase.jpg" alt="Unsplashed background img 3"></div>
+    <div class="parallax desktop"><img src="assets/sase.jpg" alt="Unsplashed background img 3"></div>
+    <div class="parallax mobile"><img src="assets/sase-mod3.jpg" alt="Unsplashed background img 3"></div>
   </div>
 
   

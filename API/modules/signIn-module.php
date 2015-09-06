@@ -98,8 +98,8 @@ class SignIn_Controller extends Controller{
         if(empty($data["msg"])){
             return message("error");
         }
-        if($data["msg"] == "query"){
-            return message("error");
+        if(!$this->authenticate){
+            return message("error","Not authenticated");
         }
         switch($data["msg"]){
             case "insert":
@@ -109,6 +109,11 @@ class SignIn_Controller extends Controller{
             default:
                 return message("error",$data);
         }
+    }
+    
+    function authenticate(){
+        session_start();
+        return isset($_SESSION["EvtAdmin"]);
     }
 }
 
