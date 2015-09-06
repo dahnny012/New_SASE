@@ -1,0 +1,17 @@
+#content {
+    margin-top:1.5em;
+    height: 100%;
+}
+
+.header{
+    font-weight:300;
+}
+
+.eventLogistics{
+    font-weight:300;
+}
+
+.image-src{
+    width:600px;
+    height:300px;
+}
