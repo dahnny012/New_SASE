@@ -275,7 +275,7 @@ var EventForm = React.createClass({
 }); 
 
 
-React.render( <EventList source = "https://new-sase-dahnny012.c9.io/API/event.php"/> 
+React.render( <EventList source = {post}/> 
 , document.getElementById("events"));
 
 

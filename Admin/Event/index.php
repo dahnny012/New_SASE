@@ -22,9 +22,9 @@ if(!include "../../API/admin.php"){
       <div class="nav-wrapper blue darken-3">
          <a href="#" class="brand-logo">Admin</a>
          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="https://new-sase-dahnny012.c9.io/Admin/Event/">Events</a>
+            <li><a href="index.php">Events</a>
             </li>
-            <li><a href="components.html">News</a>
+            <li><a href="../News/index.php">News</a>
             </li>
          </ul>
       </div>

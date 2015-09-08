@@ -297,7 +297,7 @@ var NewsForm = React.createClass({
 }); 
 
 
-React.render( <NewsList source = "https://new-sase-dahnny012.c9.io/API/news.php"/> 
+React.render( <NewsList source = {post}/> 
 , document.getElementById("news"));
 
 
