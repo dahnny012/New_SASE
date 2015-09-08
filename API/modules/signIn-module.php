@@ -40,6 +40,12 @@ class SignIn_Model extends Model{
         }
     }
     
+    public function getAll(){
+        $query = "Select * from SignIn S,Events E WHERE S.EID = E.EID";
+        $getAll = $this->db->prepare($query);
+        $getAll->execute();
+    }
+    
     private function makeMember($student){
         if(!$this->getMember($student)){
             if($student){
@@ -106,6 +112,8 @@ class SignIn_Controller extends Controller{
                 return $this->model->insert($data);
             case "programs":
                 return $this->model->insertPrograms($data);
+            case "getAll":
+                return $this->model->getAll();
             default:
                 return message("error",$data);
         }
@@ -113,7 +121,7 @@ class SignIn_Controller extends Controller{
     
     function authenticate(){
         session_start();
-        return isset($_SESSION["EvtAdmin"]);
+        return isset($_SESSION["EvtAdmin"]) || isset($_SESSION["admin"]);
     }
 }
 

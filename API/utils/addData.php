@@ -29,4 +29,18 @@
              echo "Insert Failed <br>";
          }
     }
+    
+    $json = file_get_contents("../test-data/signIn.json");
+    $data = json_decode($json)->members;
+    foreach($data as $member){
+         $insert = $db->prepare("INSERT INTO Members (Name,x500) VALUES (?,?)");
+         $insert->bindParam(1,$member->Name);
+         $insert->bindParam(2,$member->x500);
+         $insert->execute();
+         
+         $signIn = $db->prepare("Insert INTO SignIn(EID,x500) VALUES (?,?)");
+         $signIn->bindParam(1,$member->EID);
+         $signIn->bindParam(2,$member->x500);
+         $signIn->execute();
+    }
 ?>

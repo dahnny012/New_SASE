@@ -1,8 +1,16 @@
 <?php 
     include_once "../connection.php";
     $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    $drop = $db->prepare("DROP TABLE IF EXISTS SignIn");
+    $drop->execute();
     $drop = $db->prepare("DROP TABLE IF EXISTS Events");
     $drop->execute();
+    $drop = $db->prepare("DROP TABLE IF EXISTS Members");
+    $drop->execute();
+    $drop = $db->prepare("DROP TABLE IF EXISTS News");
+    $drop->execute();
+    
+    
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS Events (
      EID int(8) NOT NULL auto_increment,
      Name varchar(255) NOT NULL,
@@ -16,8 +24,7 @@
     ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
     
-    $drop = $db->prepare("DROP TABLE IF EXISTS News");
-    $drop->execute();
+   
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS News (
      NID int(8) NOT NULL auto_increment,
      Title varchar(255) NOT NULL,
@@ -29,9 +36,7 @@
     ) ENGINE=INNODB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
     $create->execute();
     
-    
-    $drop = $db->prepare("DROP TABLE IF EXISTS Members");
-    $drop->execute();
+
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS Members (
      Name varchar(32),
      x500 varchar(64) NOT NULL,
@@ -42,8 +47,6 @@
     $create->execute();
     
     
-    $drop = $db->prepare("DROP TABLE IF EXISTS SignIn");
-    $drop->execute();
     $create = $db->prepare("CREATE TABLE IF NOT EXISTS SignIn (
      EID int(8) NOT NULL,
      x500 varchar(64) NOT NULL,
